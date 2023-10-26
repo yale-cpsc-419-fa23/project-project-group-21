@@ -31,7 +31,8 @@ npm install
 ```
 
 ### Installing yarn/npm
-If your operating system doesn't come with yarn or npm supported, you may need to install it.
+If your operating system doesn't come with yarn or npm supported, you may need to install it. 
+Yarn and npm will install to your local device.
 ```
 sudo npm install -g npm
 sudo npm install -g yarn
