@@ -1,8 +1,34 @@
 import time
-from flask import Flask
+from flask import Flask, request, jsonify
+from db import Database, DB_URL
 
+db = Database(DB_URL)
 app = Flask(__name__)
 
-@app.route('/time')
-def get_current_time():
-    return {'time': time.time()}
+# @app.route('/save-card', methods=['POST'])
+# def save_card():
+#     data = request.get_json()
+#     front = data['text']
+#     db.add_card(front, "back not implemented", 0)
+
+#     return 'Text saved', 200
+
+# @app.route('/get-saved-card', methods=['GET'])
+# def get_saved_card():
+#     return jsonify({'text': saved_text})
+
+@app.route('/save-tuple', methods=['POST'])
+def save_tuple():
+    data = request.get_json()
+    card_data = data['cardTuple']
+    front = card_data[0]
+    back = card_data[1]
+    db.add_card(front, back, 0)
+    return 'Card saved', 200
+
+# @app.route('/get-saved-text', methods=['GET'])
+# def get_saved_text():
+#     return jsonify({'text': saved_text})
+
+if __name__ == '__main__':
+    app.run()

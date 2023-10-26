@@ -105,7 +105,7 @@ class Database:
         connection.commit()
         connection.close()
 
-
+# for testing purposes only.
 def main():
     db = Database(DB_URL) # instantiates a database, and closes once
 
