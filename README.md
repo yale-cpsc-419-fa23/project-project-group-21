@@ -14,6 +14,11 @@ Always source this virtual environment before proceeding with any testing.
 source venv/bin/activate
 ```
 
+To install the dependencies into your virtual environment, run:
+```
+pip install -r requirements.txt
+```
+
 ### React/npm Setup
 From the home directory, navigate to the react-flask-app folder.
 ```
