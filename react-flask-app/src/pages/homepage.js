@@ -7,6 +7,10 @@ function HomePage() {
 
   const addNewTextBoxes = () => {
     setTextboxes([...textboxes, { front: '', back: '' }]); // Add two empty text boxes as an object
+    var create_card_button = document.querySelectorAll('.create_card_button');  
+    for (var button of create_card_button) {
+      button.style.display = 'none';
+    }
   };
 
   const handleTextChange = (index, inputName, value) => {
@@ -17,9 +21,13 @@ function HomePage() {
 
   const handleSave = (index) => {
     const textToSave = [textboxes[index].front, textboxes[index].back]; // Create a tuple from the text boxes
-    var elements = document.querySelectorAll('.centered-textbox');  
-    for (var element of elements) {
-      element.remove();
+    var boxes = document.querySelectorAll('.centered-textbox');  
+    for (var textbox of boxes) {
+      textbox.remove();
+    }
+    var create_card_button = document.querySelectorAll('.create_card_button');  
+    for (var button of create_card_button) {
+      button.style.display = 'inline';
     }
     // Send a POST request to your Flask server with the tuple data
     fetch('/save-tuple', {
