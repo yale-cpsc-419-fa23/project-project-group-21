@@ -17,7 +17,10 @@ function App() {
 
   const handleSave = (index) => {
     const textToSave = [textboxes[index].front, textboxes[index].back]; // Create a tuple from the text boxes
-
+    var elements = document.querySelectorAll('.centered-textbox');  
+    for (var element of elements) {
+      element.remove();
+    }
     // Send a POST request to your Flask server with the tuple data
     fetch('/save-tuple', {
       method: 'POST',
