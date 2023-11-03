@@ -8,6 +8,7 @@ function HomePage() {
   const addNewTextBoxes = () => {
     setTextboxes([...textboxes, { front: '', back: '' }]); // Add two empty text boxes as an object
     var create_card_button = document.querySelectorAll('.create_card_button');  
+    // Make the create card button disappear
     for (var button of create_card_button) {
       button.style.display = 'none';
     }
@@ -21,10 +22,12 @@ function HomePage() {
 
   const handleSave = (index) => {
     const textToSave = [textboxes[index].front, textboxes[index].back]; // Create a tuple from the text boxes
+    // Remove textboxes when saved to the database
     var boxes = document.querySelectorAll('.centered-textbox');  
     for (var textbox of boxes) {
       textbox.remove();
     }
+    // Make the create a card button reappear for the next entry
     var create_card_button = document.querySelectorAll('.create_card_button');  
     for (var button of create_card_button) {
       button.style.display = 'inline';
@@ -41,6 +44,25 @@ function HomePage() {
         // Handle the response from the server if needed
         if (response.status === 200) {
           setSavedText(textToSave.join(', '));
+        }
+      })
+      .catch((error) => {
+        // Handle errors if the request fails
+      });
+  };
+
+  const updateWordList = () => {
+    fetch('/retrieve-all-cards', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then((res) => {
+        var div = document.getElementById('wordlist');
+        div.innerHTML = '';
+        for (var obj of res) {
+          div.innerHTML += `<div className="word">${obj}</div>`;
         }
       })
       .catch((error) => {
@@ -70,7 +92,7 @@ function HomePage() {
               value={text.text2}
               onChange={(e) => handleTextChange(index, 'back', e.target.value)}
             />
-            <button onClick={() => handleSave(index)} className="create_card_button">
+            <button onClick={() => {handleSave(index); updateWordList()}} className="create_card_button">
               Save Tuple
             </button>
           </div>
@@ -84,7 +106,7 @@ function HomePage() {
         <div className="wordbox-header">
           <h1>WORDBOX</h1>
         </div>
-        <div className="wordlist">
+        <div id="wordlist" className="wordlist">
           GET ALL THE WORDS FROM DATABASE TO DISPLAY HERE
         </div>
         <div className="tag-container">

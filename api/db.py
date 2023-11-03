@@ -119,13 +119,10 @@ class Database:
 
 
     def retrieve_cards(self):
-        statement = """
-                    SELECT cards.front, cards.back, cards.id, tags.name
+        statement = """SELECT cards.front, cards.back, cards.id, tags.name
                     FROM cards
                     LEFT JOIN tags ON cards.tag_id = tags.id 
-                    ORDER BY cards.front ASC
-                    limit 25;
-                """
+                    ORDER BY cards.front ASC"""
         connection, cursor = self.db_connect()
         cursor.execute(statement)
         return cursor.fetchall()

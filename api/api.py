@@ -1,6 +1,6 @@
 import time
 from flask import Flask, request, jsonify
-from db import Database, DB_URL
+from db import Database, DB_URL 
 
 db = Database(DB_URL)
 app = Flask(__name__)
@@ -25,6 +25,10 @@ def save_tuple():
     back = card_data[1]
     db.add_card(front, back, 0)
     return 'Card saved', 200
+
+@app.route('/retrieve-all-cards', methods=['GET'])
+def retrieve_all_cards():
+    return db.retrieve_cards(), 200
 
 # @app.route('/get-saved-text', methods=['GET'])
 # def get_saved_text():

@@ -39,6 +39,10 @@
   flex: 7;
 }
 
+.word {
+  background-color: pink;
+}
+
 .tag-container {
   flex: 0;
   background-color: yellow;
