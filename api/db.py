@@ -105,16 +105,46 @@ class Database:
         connection.commit()
         connection.close()
 
+    def update_tag(self, tag_id, card_id):
+        data = (tag_id, card_id)
+        statement = """UPDATE cards
+                        SET tag_id = ?
+                        WHERE id = ?"""
+        connection = sqlite3.connect(self.db_url)
+        self.execute_statement(connection=connection,
+                               statement=statement,
+                               data=data)
+        connection.commit()
+        connection.close()
+
+
+    def retrieve_cards(self):
+        statement = """
+                    SELECT cards.front, cards.back, cards.id, tags.name
+                    FROM cards
+                    LEFT JOIN tags ON cards.tag_id = tags.id 
+                    ORDER BY cards.front ASC
+                    limit 25;
+                """
+        connection, cursor = self.db_connect()
+        cursor.execute(statement)
+        return cursor.fetchall()
+
 # for testing purposes only.
 def main():
     db = Database(DB_URL) # instantiates a database, and closes once
 
     # testing
-    db.add_card("hello", "world", "10")
+    db.add_card("hello", "world", "0")
     db.add_card("this is", "pretty cool", "11")
 
     db.add_tag("tag0")
     db.add_tag("tag1")
+
+    db.update_tag("1", "0")
+
+    print(db.retrieve_cards())
+
 
 if __name__ == '__main__':
     main()
