@@ -5,7 +5,7 @@ from db import Database, DB_URL
 db = Database(DB_URL)
 app = Flask(__name__)
 
-# @app.route('/save-card', methods=['POST'])
+# @app.route('/save-card', methods=['POST']) 
 # def save_card():
 #     data = request.get_json()
 #     front = data['text']
@@ -14,7 +14,7 @@ app = Flask(__name__)
 #     return 'Text saved', 200
 
 # @app.route('/get-saved-card', methods=['GET'])
-# def get_saved_card():
+#     def get_saved_card():
 #     return jsonify({'text': saved_text})
 
 @app.route('/save-tuple', methods=['POST'])
@@ -30,9 +30,9 @@ def save_tuple():
 def retrieve_all_cards():
     return db.retrieve_cards(), 200
 
-# @app.route('/get-saved-text', methods=['GET'])
+# @app.route('/get-saved-text', methods=['GET']) 
 # def get_saved_text():
-#     return jsonify({'text': saved_text})
+#     return jsonify({'text': saved_text})s
 
 if __name__ == '__main__':
     app.run()
