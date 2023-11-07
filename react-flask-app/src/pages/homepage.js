@@ -4,6 +4,8 @@ import '../styles/homepage.css';
 function HomePage() {
   const [textboxes, setTextboxes] = useState([]);
   const [savedText, setSavedText] = useState(''); // To store the saved text
+  const [showTagInput, setShowTagInput] = useState(false);
+  const [tagInput, setTagInput] = useState(''); // Initialize the tag input state variable
 
   const addNewTextBoxes = () => {
     setTextboxes([...textboxes, { front: '', back: '' }]); // Add two empty text boxes as an object
@@ -70,6 +72,32 @@ function HomePage() {
       });
   };
 
+  const handleTagButtonClick = () => {
+    setShowTagInput(true); // Show the tag input when the button is clicked
+  };
+
+  const createTagName = (tagName) => {
+    fetch('/add-new-tag', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ tagName }),
+    })
+    .then((response) => {
+      // Handle the response from the server if needed
+      if (response.status === 200) {
+        // Handle success
+      } else {
+        // Handle other responses or errors
+      }
+    })
+    .catch((error) => {
+      // Handle errors if the request fails
+    });
+    setShowTagInput(false); // Hide the tag input box after submission
+  };
+
   return (
     <div className="main-container">
       <div className="flashcard-container">
@@ -110,7 +138,19 @@ function HomePage() {
           GET ALL THE WORDS FROM DATABASE TO DISPLAY HERE
         </div>
         <div className="tag-container">
-          <button>Make your tags here</button>
+          {showTagInput ? ( // Conditionally render the tag input
+            <div className="centered-textbox">
+              <input
+                type="text"
+                placeholder="Enter Tag Name"
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+              />
+              <button onClick={() => createTagName(tagInput)}>Submit</button>
+            </div>
+          ) : (
+            <button onClick={handleTagButtonClick}>Make your tags here</button>
+          )}
         </div>
       </div>
     </div>
