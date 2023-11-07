@@ -30,6 +30,13 @@ def save_tuple():
 def retrieve_all_cards():
     return db.retrieve_cards(), 200
 
+@app.route('/add-new-tag', methods=['POST'])
+def add_new_tag():
+    data = request.get_json()
+    tag_name = data['tagName']  # Deserialize the tag name from the JSON data
+    db.add_tag(tag_name)  
+    return 'Tag added', 200
+
 # @app.route('/get-saved-text', methods=['GET']) 
 # def get_saved_text():
 #     return jsonify({'text': saved_text})s
