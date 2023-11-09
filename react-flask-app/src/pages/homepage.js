@@ -99,61 +99,66 @@ function HomePage() {
   };
 
   return (
-    <div className="main-container">
-      <div className="flashcard-container">
-        <button onClick={addNewTextBoxes} className="create_card_button">
-          Create Two Text Boxes
-        </button>
-        {textboxes.map((text, index) => (
-          <div className="centered-textbox" key={index}>
-            <textarea
-              rows="4"
-              cols="50"
-              placeholder="Front"
-              value={text.text1}
-              onChange={(e) => handleTextChange(index, 'front', e.target.value)}
-            />
-            <textarea
-              rows="4"
-              cols="50"
-              placeholder="Back"
-              value={text.text2}
-              onChange={(e) => handleTextChange(index, 'back', e.target.value)}
-            />
-            <button onClick={() => {handleSave(index); updateWordList()}} className="create_card_button">
-              Save Tuple
-            </button>
-          </div>
-        ))}
-        <div className="centered-text">
-          <p>{savedText}</p>
-        </div>
-      </div>
-
-      <div className="wordbox-container">
-        <div className="wordbox-header">
-          <h1>WORDBOX</h1>
-        </div>
-        <div id="wordlist" className="wordlist">
-          GET ALL THE WORDS FROM DATABASE TO DISPLAY HERE
-        </div>
-        <div className="tag-container">
-          {showTagInput ? ( // Conditionally render the tag input
-            <div className="centered-textbox">
-              <input
-                type="text"
-                placeholder="Enter Tag Name"
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
+    <div className="content-container">
+      <div className="main-container">
+        <div className="flashcard-container">
+          <button onClick={addNewTextBoxes} className="create_card_button">
+            Create Two Text Boxes
+          </button>
+          {textboxes.map((text, index) => (
+            <div className="centered-textbox" key={index}>
+              <textarea
+                rows="4"
+                cols="50"
+                placeholder="Front"
+                value={text.text1}
+                onChange={(e) => handleTextChange(index, 'front', e.target.value)}
               />
-              <button onClick={() => createTagName(tagInput)}>Submit</button>
+              <textarea
+                rows="4"
+                cols="50"
+                placeholder="Back"
+                value={text.text2}
+                onChange={(e) => handleTextChange(index, 'back', e.target.value)}
+              />
+              <button onClick={() => {handleSave(index); updateWordList()}} className="create_card_button">
+                Save Tuple
+              </button>
             </div>
-          ) : (
-            <button onClick={handleTagButtonClick}>Make your tags here</button>
-          )}
+          ))}
+          <div className="centered-text">
+            <p>{savedText}</p>
+          </div>
+        </div>
+
+        <div className="wordbox-container">
+          <div className="wordbox-header">
+            <h1>WORDBOX</h1>
+          </div>
+          <div id="wordlist" className="wordlist">
+            GET ALL THE WORDS FROM DATABASE TO DISPLAY HERE
+          </div>
+          <div className="tag-container">
+            {showTagInput ? ( // Conditionally render the tag input
+              <div className="centered-textbox">
+                <input
+                  type="text"
+                  placeholder="Enter Tag Name"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                />
+                <button onClick={() => createTagName(tagInput)}>Submit</button>
+              </div>
+            ) : (
+              <button onClick={handleTagButtonClick}>Make your tags here</button>
+            )}
+          </div>
         </div>
       </div>
+      <div className="button-container">
+      <button>Show All Tags</button>
     </div>
+  </div>
   );
 }
 
