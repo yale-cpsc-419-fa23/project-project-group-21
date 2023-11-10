@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/homepage.css';
+import Header from '../components/header';
 
 function HomePage() {
   const [textboxes, setTextboxes] = useState([]);
@@ -77,7 +78,6 @@ function HomePage() {
   };
 
   const createTagName = (tagName) => {
-    // document.getElementById('tag_textbox').value = '';
     setTagInput('');
     console.log(document.getElementById('tag_textbox'));
     fetch('/add-new-tag', {
@@ -103,6 +103,7 @@ function HomePage() {
 
   return (
     <div className="content-container">
+      <Header className="header"/>
       <div className="main-container">
         <div className="flashcard-container">
           <button onClick={addNewTextBoxes} className="create_card_button">
