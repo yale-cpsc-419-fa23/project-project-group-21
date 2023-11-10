@@ -1,0 +1,23 @@
+.header-bar{
+  display: flex;
+  flex-direction: row;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:100;
+  background-color: blueviolet;
+  height: 40px;
+}
+
+.title{
+  margin-top: -15px;
+  margin-left: 10px;
+}
+
+.edit{
+  margin-left: 15px;
+}
+
+.library{
+  margin-left: 15px;
+}
