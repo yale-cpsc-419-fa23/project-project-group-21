@@ -92,6 +92,8 @@ class Database:
         connection.close()
 
     def add_tag(self, name):
+        # ERROR: if inputting the tag reaches an error(executing) then the tag_id increases regardless
+        # ERROR: put UNIQUE names
         data = (self.tag_id, name)
         print(data)
         self.tag_id += 1 # increment card_id after setting it to current card.

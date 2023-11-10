@@ -77,6 +77,9 @@ function HomePage() {
   };
 
   const createTagName = (tagName) => {
+    // document.getElementById('tag_textbox').value = '';
+    setTagInput('');
+    console.log(document.getElementById('tag_textbox'));
     fetch('/add-new-tag', {
       method: 'POST',
       headers: {
@@ -142,6 +145,7 @@ function HomePage() {
             {showTagInput ? ( // Conditionally render the tag input
               <div className="centered-textbox">
                 <input
+                  id="tag_textbox"
                   type="text"
                   placeholder="Enter Tag Name"
                   value={tagInput}
