@@ -1,26 +1,32 @@
+import {Create, LocalLibrary} from '@mui/icons-material';
+import {Button, Stack, Box} from '@mui/material';
 import '../styles/header.css';
 
 function Header() {
 
   return (
 
-    <div class="header-bar">
-      <div class="title">
+<Stack direction="row" className="header-bar">
+      <Box class="title">
         <h2> FLASHCARD WEBSITE </h2>
-      </div>
+      </Box>
       
-      <div class="edit">
+      <Box className="edit">
         <a href="/">
-          <button>EDIT PAGE</button>
+          <Button>
+            <Create/>
+          </Button>
         </a>
-      </div>
+      </Box>
       
-      <div class="library">
+      <Box className="library">
         <a href="/library">
-          <button>VIEW PAGE</button>
+          <Button>
+            <LocalLibrary/>
+          </Button>
         </a>
-      </div>
-    </div>
+      </Box>
+    </Stack>
   )
 }
 
