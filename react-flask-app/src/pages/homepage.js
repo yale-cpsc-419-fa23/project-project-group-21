@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/homepage.css';
 import Header from '../components/header';
+import DataTable from 'datatables.net-dt';
 
 function HomePage() {
   const [textboxes, setTextboxes] = useState([]);
@@ -10,7 +11,7 @@ function HomePage() {
 
   const addNewTextBoxes = () => {
     setTextboxes([...textboxes, { front: '', back: '' }]); // Add two empty text boxes as an object
-    var create_card_button = document.querySelectorAll('.create_card_button');  
+    var create_card_button = document.querySelectorAll('.create_card_button');
     // Make the create card button disappear
     for (var button of create_card_button) {
       button.style.display = 'none';
@@ -24,34 +25,38 @@ function HomePage() {
   };
 
   const handleSave = (index) => {
-    const textToSave = [textboxes[index].front, textboxes[index].back]; // Create a tuple from the text boxes
-    // Remove textboxes when saved to the database
-    var boxes = document.querySelectorAll('.centered-textbox');  
-    for (var textbox of boxes) {
-      textbox.remove();
-    }
-    // Make the create a card button reappear for the next entry
-    var create_card_button = document.querySelectorAll('.create_card_button');  
-    for (var button of create_card_button) {
-      button.style.display = 'inline';
-    }
-    // Send a POST request to your Flask server with the tuple data
-    fetch('/save-tuple', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ cardTuple: textToSave }),
-    })
-      .then((response) => {
-        // Handle the response from the server if needed
-        if (response.status === 200) {
-          setSavedText(textToSave.join(', '));
-        }
+    return new Promise((resolve, reject) => {
+      const textToSave = [textboxes[index].front, textboxes[index].back]; // Create a tuple from the text boxes
+      // Remove textboxes when saved to the database
+      var boxes = document.querySelectorAll('.centered-textbox');
+      for (var textbox of boxes) {
+        textbox.remove();
+      }
+      // Make the create a card button reappear for the next entry
+      var create_card_button = document.querySelectorAll('.create_card_button');
+      for (var button of create_card_button) {
+        button.style.display = 'inline';
+      }
+      // Send a POST request to your Flask server with the tuple data
+      fetch('/save-tuple', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cardTuple: textToSave }),
       })
-      .catch((error) => {
-        // Handle errors if the request fails
+        .then((response) => {
+          // Handle the response from the server if needed
+          if (response.status === 200) {
+            setSavedText(textToSave.join(', '));
+            resolve('Saved to database.');
+          }
+        })
+        .catch((error) => {
+          // Handle errors if the request fails
+        });
       });
+
   };
 
   const updateWordList = () => {
@@ -64,14 +69,16 @@ function HomePage() {
       .then((res) => {
         var div = document.getElementById('wordlist');
         div.innerHTML = '';
-        for (var obj of res) {
-          div.innerHTML += `<div className="word">${obj}</div>`;
-        }
-      })
-      .catch((error) => {
-        // Handle errors if the request fails
+          for (var obj of res) {
+            div.innerHTML += `<div className="word">${obj}</div>`;
+          }
       });
   };
+
+  const handleSaveButtonClick = async (index) => {
+    await handleSave(index);
+    updateWordList();
+  }
 
   const handleTagButtonClick = () => {
     setShowTagInput(true); // Show the tag input when the button is clicked
@@ -125,7 +132,7 @@ function HomePage() {
                 value={text.text2}
                 onChange={(e) => handleTextChange(index, 'back', e.target.value)}
               />
-              <button onClick={() => {handleSave(index); updateWordList()}} className="create_card_button">
+              <button onClick={() => {handleSaveButtonClick(index)}} className="create_card_button">
                 Save Tuple
               </button>
             </div>
