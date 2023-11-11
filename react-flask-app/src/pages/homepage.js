@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/homepage.css';
 import Header from '../components/header';
-import DataTable from 'datatables.net-dt';
+import Button from '@mui/material/Button';
 
 function HomePage() {
   const [textboxes, setTextboxes] = useState([]);
@@ -168,7 +168,7 @@ function HomePage() {
         </div>
       </div>
       <div className="button-container">
-      <button>Show All Tags</button>
+      <Button variant="contained">Show All Tags</Button>
     </div>
   </div>
   );
