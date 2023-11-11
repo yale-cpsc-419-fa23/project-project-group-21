@@ -1,11 +1,11 @@
 import time
 from flask import Flask, request, jsonify
-from db import Database, DB_URL 
+from db import Database, DB_URL
 
 db = Database(DB_URL)
 app = Flask(__name__)
 
-# @app.route('/save-card', methods=['POST']) 
+# @app.route('/save-card', methods=['POST'])
 # def save_card():
 #     data = request.get_json()
 #     front = data['text']
@@ -34,10 +34,14 @@ def retrieve_all_cards():
 def add_new_tag():
     data = request.get_json()
     tag_name = data['tagName']  # Deserialize the tag name from the JSON data
-    db.add_tag(tag_name)  
+    db.add_tag(tag_name)
     return 'Tag added', 200
 
-# @app.route('/get-saved-text', methods=['GET']) 
+@app.route('/retrieve-all-tags', methods=['GET'])
+def retrieve_all_cards():
+    return db.retrieve_tags(), 200
+
+# @app.route('/get-saved-text', methods=['GET'])
 # def get_saved_text():
 #     return jsonify({'text': saved_text})s
 
