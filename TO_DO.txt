@@ -1,0 +1,15 @@
+Library Page set up - PERRY
+    Have flash card show in the center 
+    Have the list of flashcards on the side
+
+Test Page set up - THOMAS 
+    Be able to swipe through flash cards, no word list
+
+Add tag to flashcard - KEVIN
+
+Have the wordbox be clickable
+    make it so that the button will have different funcitonality depending on page 
+        Edit page - click and able to edit that card 
+        Library page - click and just see the card 
+    
+Make flash card pretty (AKA flip functionality)
