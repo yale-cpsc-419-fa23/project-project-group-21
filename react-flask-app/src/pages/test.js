@@ -1,7 +1,9 @@
 import React from 'react';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import '../styles/test.css';
+import Header from "../components/header";
+import { Select, InputLabel, MenuItem, Button, Box, Typography } from "@mui/material";
+
+const tagOptions = ['Tag 1', 'Tag 2', 'Tag 3'];
 
 function Test() {
     // This state will store the selected value from the dropdown.
@@ -12,21 +14,40 @@ function Test() {
     };
   
     return (
-      <div>
-        <InputLabel id="flashcard-select-label">Choose which flashcards you would like to test</InputLabel>
-        <Select
-          labelId="flashcard-select-label"
-          id="flashcard-select"
-          value={selectedValue}
-          onChange={handleChange}
-        >
-          {/* You can map over your flashcard options and create menu items dynamically */}
-          <MenuItem value="flashcard1">Flashcard 1</MenuItem>
-          <MenuItem value="flashcard2">Flashcard 2</MenuItem>
-          <MenuItem value="flashcard3">Flashcard 3</MenuItem>
-          {/* Add more menu items as needed */}
-        </Select>
-      </div>
+        <Box>
+            <Header/>
+            <div className="testing-container">
+                <div className="label-container">
+                    <InputLabel 
+                        id="flashcard-select-label" 
+                        style={{ fontWeight: 'bold' }}
+                    >
+                        Choose which flashcards you would like to test
+                    </InputLabel>
+                </div>
+                <div className="button-dropdown-container">
+                    <Button variant="contained">All flashcards</Button>
+                    <Typography variant="subtitle1" style={{ marginTop: '10px', marginLeft: '40px' }}>
+                        Choose a tag:
+                    </Typography>
+                    <Select
+                        labelId="flashcard-select-label"
+                        id="flashcard-select"
+                        value={selectedValue}
+                        onChange={handleChange}
+                    >
+                        <MenuItem disabled value="">
+                            <em>Choose a tag</em>
+                        </MenuItem>
+                        {tagOptions.map((tag) => (
+                            <MenuItem key={tag} value={tag}>
+                                {tag}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </div>
+            </div>
+        </Box>
     );
   }
   
