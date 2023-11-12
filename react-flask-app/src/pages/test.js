@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/test.css';
 import Header from "../components/header";
 import { Select, InputLabel, MenuItem, Button, Box, Typography } from "@mui/material";
 
-const tagOptions = ['Tag 1', 'Tag 2', 'Tag 3'];
-
 function Test() {
     // This state will store the selected value from the dropdown.
     const [selectedValue, setSelectedValue] = React.useState('');
+    const [tags, setTags] = useState([]);
+
+    useEffect(() => {
+        // Make a GET request to your Flask API endpoint
+        fetch('/retrieve-all-tags')
+          .then((response) => response.json())
+          .then((data) => setTags(data))
+          .catch((error) => console.error('Error fetching data:', error));
+    }, []);
   
     const handleChange = (event) => {
       setSelectedValue(event.target.value);
@@ -39,7 +46,7 @@ function Test() {
                         <MenuItem disabled value="">
                             <em>Choose a tag</em>
                         </MenuItem>
-                        {tagOptions.map((tag) => (
+                        {tags.map((tag) => (
                             <MenuItem key={tag} value={tag}>
                                 {tag}
                             </MenuItem>

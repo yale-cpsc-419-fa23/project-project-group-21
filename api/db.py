@@ -130,9 +130,10 @@ class Database:
         return cursor.fetchall()
 
     def retrieve_tags(self):
-        statement = """SELECT tags.name, tags.id
+        statement = """SELECT tags.name
+                    FROM tags
                     ORDER BY tags.name ASC"""
-        connection, cursor = self.db_connect()
+        cursor = self.db_connect()
         cursor.execute(statement)
         return cursor.fetchall()
 

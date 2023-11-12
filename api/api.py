@@ -39,7 +39,8 @@ def add_new_tag():
 
 @app.route('/retrieve-all-tags', methods=['GET'])
 def retrieve_all_tags():
-    return db.retrieve_tags(), 200
+    tags = db.retrieve_tags()
+    return jsonify(tags), 200
 
 # @app.route('/get-saved-text', methods=['GET'])
 # def get_saved_text():
