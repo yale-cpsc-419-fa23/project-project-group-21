@@ -1,5 +1,7 @@
 import { Create, LocalLibrary } from '@mui/icons-material';
 import { Button, Stack, Box } from '@mui/material';
+import QuizIcon from '@mui/icons-material/Quiz';
+import Tooltip from '@mui/material/Tooltip';
 import '../styles/header.css';
 
 function Header() {
@@ -13,17 +15,31 @@ function Header() {
       
       <Box className="edit">
         <a href="/">
-          <Button>
-            <Create/>
-          </Button>
+          <Tooltip title="Edit" arrow>
+            <Button>
+              <Create/>
+            </Button>
+          </Tooltip>
         </a>
       </Box>
       
       <Box className="library">
         <a href="/library">
-          <Button>
-            <LocalLibrary/>
-          </Button>
+          <Tooltip title="Library" arrow>
+            <Button>
+              <LocalLibrary/>
+            </Button>
+          </Tooltip>
+        </a>
+      </Box>
+
+      <Box className="test">
+        <a href="/test">
+          <Tooltip title="Testing" arrow>
+            <Button>
+              <QuizIcon/>
+            </Button>
+          </Tooltip>
         </a>
       </Box>
     </Stack>

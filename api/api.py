@@ -38,7 +38,7 @@ def add_new_tag():
     return 'Tag added', 200
 
 @app.route('/retrieve-all-tags', methods=['GET'])
-def retrieve_all_cards():
+def retrieve_all_tags():
     return db.retrieve_tags(), 200
 
 # @app.route('/get-saved-text', methods=['GET'])
