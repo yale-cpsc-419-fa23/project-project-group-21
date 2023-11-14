@@ -18,7 +18,29 @@ function Test() {
   
     const handleChange = (event) => {
       setSelectedValue(event.target.value);
+      getCardsTag(event.target.value);
     };
+
+    const getCardsTag = (tag) => {
+        fetch('retrieve-cards-tag', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tag }),
+        })
+        .then((response) => {
+            // Handle the response from the server if needed
+            if (response.status === 200) {
+                // Handle success
+            } else {
+                // Handle other responses or errors
+            }
+        })
+        .catch((error) => {
+            // Handle errors if the request fails
+        });
+    }
   
     return (
         <Box>
