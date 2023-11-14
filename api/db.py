@@ -133,7 +133,7 @@ class Database:
         statement = """SELECT tags.name
                     FROM tags
                     ORDER BY tags.name ASC"""
-        cursor = self.db_connect()
+        connection, cursor = self.db_connect()
         cursor.execute(statement)
         return cursor.fetchall()
 
