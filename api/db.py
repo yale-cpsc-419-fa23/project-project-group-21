@@ -128,6 +128,16 @@ class Database:
         connection, cursor = self.db_connect()
         cursor.execute(statement)
         return cursor.fetchall()
+    
+    def retrieve_cards_tag(self, tag):
+        statement = """"SELECT cards.front, cards.back, cards.id, tags.name 
+                    FROM cards 
+                    LEFT JOIN tags ON cards.tag_id = tags.id 
+                    WHERE tags.id = ? 
+                    ORDER BY cards.front ASC"""
+        connection, cursor = self.db_connect()
+        cursor.execute(statement, (tag,))
+        return cursor.fetchall()
 
     def retrieve_tags(self):
         statement = """SELECT tags.name

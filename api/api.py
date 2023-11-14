@@ -28,7 +28,8 @@ def save_tuple():
 
 @app.route('/retrieve-all-cards', methods=['GET'])
 def retrieve_all_cards():
-    return db.retrieve_cards(), 200
+    cards = db.retrieve_cards()
+    return jsonify(cards), 200
 
 @app.route('/add-new-tag', methods=['POST'])
 def add_new_tag():
@@ -41,6 +42,14 @@ def add_new_tag():
 def retrieve_all_tags():
     tags = db.retrieve_tags()
     return jsonify(tags), 200
+
+@app.route('/retrieve-cards-tag', methods=['GET'])
+def retrieve_cards_tag():
+    data = request.get_json()
+    tag_name = data['tagName']
+    cards = db.retrieve_cards_tag(tag_name)
+    return jsonify(cards), 200
+
 
 # @app.route('/get-saved-text', methods=['GET'])
 # def get_saved_text():
