@@ -9,7 +9,7 @@ function Header() {
   return (
 
 <Stack direction="row" className="header-bar">
-      <Box class="title">
+      <Box className="title">
         <h2> FLASHCARD WEBSITE </h2>
       </Box>
       
