@@ -1,4 +1,4 @@
-.header-bar{
+.header-bar {
   position:fixed;
   top:0;
   width:100%;
@@ -7,15 +7,19 @@
   height: 40px;
 }
 
-.title{
+.title {
   margin-top: -15px;
   margin-left: 10px;
 }
 
-.edit{
+.edit {
   margin-left: 15px;
 }
 
-.library{
+.library {
+  margin-left: 15px;
+}
+
+.test {
   margin-left: 15px;
 }

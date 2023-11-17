@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Stack, Box } from '@mui/material';
 import '../styles/wordbox.css';
 
@@ -34,6 +34,26 @@ function Wordbox () {
     setShowTagInput(false); // Hide the tag input box after submission
   };
 
+  const updateWordList = () => {
+    fetch('/retrieve-all-cards', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then((res) => {
+        var div = document.getElementById('wordlist');
+        div.innerHTML = '';
+          for (var obj of res) {
+            div.innerHTML += `<div className="word">${obj}</div>`;
+          }
+      });
+  };
+
+  useEffect(() => {
+    updateWordList();
+  }, []);
+
   return(
 
     <Stack direction="column" className="wordbox-container">
@@ -43,7 +63,6 @@ function Wordbox () {
       </Box>
 
       <Box id="wordlist" className="wordlist">
-        GET ALL THE WORDS FROM DATABASE TO DISPLAY HERE
       </Box>
 
       <Box className="tag-container">

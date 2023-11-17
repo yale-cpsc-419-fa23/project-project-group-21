@@ -8,14 +8,12 @@ Have the wordbox be clickable
         Edit page - click and able to edit that card 
         Library page - click and just see the card
 
-Change wordbox to pull from database in these situations: PERRY
-    1: New page with a word boxes is opened
-    2: New word is added
-    3: Word is edited
-    4: Word tag is edited
+Change wordbox to pull from database in these situations:
+    3: Word is edited (CAN'T BE DONE YET)
+    4: Word tag is edited (CAN'T BE DONE YET)
 
-Library Page:
-    Have flash card show the contents fo a clicked word
+Library Page: PERRY
+    Have flash card show the contents of a clicked word
 
 Make flash card pretty (AKA flip functionality)
     Probably make it a component that can be exported throughout
