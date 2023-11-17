@@ -7,6 +7,7 @@ import Wordbox from '../components/wordbox';
 function HomePage() {
   const [textboxes, setTextboxes] = useState([]);
   const [savedText, setSavedText] = useState(''); // To store the saved text
+  const [updateBox, setUpdateBox] = useState(0);
 
   const addNewTextBoxes = () => {
     setTextboxes([...textboxes, { front: '', back: '' }]); // Add two empty text boxes as an object
@@ -58,25 +59,30 @@ function HomePage() {
 
   };
 
-  const updateWordList = () => {
-    fetch('/retrieve-all-cards', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-      .then((res) => {
-        var div = document.getElementById('wordlist');
-        div.innerHTML = '';
-          for (var obj of res) {
-            div.innerHTML += `<div className="word">${obj}</div>`;
-          }
-      });
+  // const updateWordList = () => {
+  //   fetch('/retrieve-all-cards', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then(res => res.json())
+  //     .then((res) => {
+  //       var div = document.getElementById('wordlist');
+  //       div.innerHTML = '';
+  //         for (var obj of res) {
+  //           div.innerHTML += `<button className="word">${obj}</button>`;
+  //         }
+  //     });
+  // };
+
+  const editFlashcard = (wordId) => {
+    // Handle button click logic with the wordId
+    console.log(`Editing flashcard with ID: ${wordId}`);
   };
 
   const handleSaveButtonClick = async (index) => {
     await handleSave(index);
-    updateWordList();
+    setUpdateBox(updateBox + 1);
   }
 
   return (
@@ -112,7 +118,7 @@ function HomePage() {
             <p>{savedText}</p>
           </div>
         </div>
-        <Wordbox/>
+        <Wordbox onButtonClick={editFlashcard} updateBox={updateBox}/>
       </div>
       <div className="button-container">
       <Button variant="contained">Show All Tags</Button>

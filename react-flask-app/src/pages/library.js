@@ -6,6 +6,12 @@ import Wordbox from "../components/wordbox";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 
 function Library() {
+
+  const viewFlashcard = (wordId) => {
+    // Handle button click logic with the wordId
+    console.log(`Viewing flashcard with ID: ${wordId}`);
+  };
+
   return(
     
     <Box className="content-container">
@@ -22,7 +28,7 @@ function Library() {
           </Card>
         </Box>
 
-        <Wordbox/>
+        <Wordbox onButtonClick={viewFlashcard}/>
 
       </Box>
     </Box>
