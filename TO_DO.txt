@@ -3,7 +3,7 @@ Test Page set up - THOMAS
 
 Add tag to flashcard - KEVIN
 
-Have the wordbox be clickable
+Have the wordbox be clickable - PERRY
     make it so that the button will have different funcitonality depending on page 
         Edit page - click and able to edit that card 
         Library page - click and just see the card
@@ -12,7 +12,7 @@ Change wordbox to pull from database in these situations:
     3: Word is edited (CAN'T BE DONE YET)
     4: Word tag is edited (CAN'T BE DONE YET)
 
-Library Page: PERRY
+Library Page
     Have flash card show the contents of a clicked word
 
 Make flash card pretty (AKA flip functionality)

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, Button } from '@mui/material';
 import '../styles/wordbox.css';
 
 function Wordbox () {
@@ -45,7 +45,7 @@ function Wordbox () {
         var div = document.getElementById('wordlist');
         div.innerHTML = '';
           for (var obj of res) {
-            div.innerHTML += `<div className="word">${obj}</div>`;
+            div.innerHTML += `<Button className="word">${obj}</Button>`;
           }
       });
   };
