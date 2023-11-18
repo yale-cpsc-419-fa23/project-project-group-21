@@ -3,7 +3,7 @@ import "../styles/fliptransition.css";
 
 import { Box } from "@mui/material";
 
-function Flashcard({ onClick }) {
+function Flashcard({ onClick, word }) {
 
   return(
     <Box className="flashcard">
@@ -11,13 +11,13 @@ function Flashcard({ onClick }) {
         <button onClick={onClick}> 
           CLICK TO FLIP!
         </button>
-        Back
+        {word[1]}
       </Box>
       <Box className="card-front">
         <button onClick={onClick}> 
           CLICK TO FLIP!
         </button>
-        FRONT
+        {word[0]}
       </Box>
     </Box>
   )       

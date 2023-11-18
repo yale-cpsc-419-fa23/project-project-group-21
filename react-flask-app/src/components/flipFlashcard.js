@@ -1,12 +1,16 @@
 import "../styles/flipflashcard.css";
 import Flashcard from "./flashcard";
 import { CSSTransition } from "react-transition-group";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Box } from "@mui/material";
 
-function Flipflashcard() {
+function Flipflashcard({ word }) {
   const [showFront, setShowFront] = useState(true);
+
+  useEffect(() => {
+    setShowFront(true);
+  }, [word]);
 
   return(
     <Box className="flip-flashcard-container">
@@ -17,7 +21,8 @@ function Flipflashcard() {
       >
         <Flashcard onClick={() => {
           setShowFront((v) => !v);
-        }}/>
+        }}
+        word={word}/>
       </CSSTransition>
     </Box>
   )       

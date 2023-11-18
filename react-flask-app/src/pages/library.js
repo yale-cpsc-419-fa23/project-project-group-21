@@ -4,13 +4,17 @@ import Header from "../components/header";
 import Wordbox from "../components/wordbox";
 import Flipflashcard from "../components/flipFlashcard";
 
+import { useState } from "react";
+
 import { Box } from "@mui/material";
 
 function Library() {
+  const [currentWord, setCurrentWord] = useState([])
 
   const viewFlashcard = (word) => {
     // Handle button click logic with the wordId
     console.log(`Viewing flashcard with ID: ${word}`);
+    setCurrentWord(word);
   };
 
   return(
@@ -20,7 +24,7 @@ function Library() {
       
       <Box className="main-container">
         <Box className="flashcard-container">
-          <Flipflashcard/>
+          <Flipflashcard word={currentWord}/>
         </Box>
 
         <Wordbox onButtonClick={viewFlashcard}/>
