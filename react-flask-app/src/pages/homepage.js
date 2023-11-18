@@ -75,9 +75,9 @@ function HomePage() {
   //     });
   // };
 
-  const editFlashcard = (wordId) => {
+  const editFlashcard = (word) => {
     // Handle button click logic with the wordId
-    console.log(`Editing flashcard with ID: ${wordId}`);
+    console.log(`Editing flashcard with ID: ${word}`);
   };
 
   const handleSaveButtonClick = async (index) => {

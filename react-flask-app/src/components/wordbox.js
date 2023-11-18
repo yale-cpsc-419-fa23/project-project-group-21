@@ -52,9 +52,7 @@ function Wordbox ({ onButtonClick, updateBox }) {
 
   // RETURN ID NUMBER
   const handleWordClick = (word) => {
-    console.log("I SHOULD RETURN THE ID NUMBER");
-    console.log(word[2]);
-    onButtonClick(word[2]);
+    onButtonClick(word);
   }
 
   useEffect(() => {
