@@ -12,7 +12,6 @@ function Library() {
   const [currentWord, setCurrentWord] = useState([])
 
   const viewFlashcard = (word) => {
-    // Handle button click logic with the wordId
     console.log(`Viewing flashcard with ID: ${word}`);
     setCurrentWord(word);
   };

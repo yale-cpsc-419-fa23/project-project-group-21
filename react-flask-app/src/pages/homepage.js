@@ -9,14 +9,12 @@ function HomePage() {
   const [textboxes, setTextboxes] = useState([]);
   const [savedText, setSavedText] = useState(''); // To store the saved text
   const [updateBox, setUpdateBox] = useState(0);
+  const [createCardVisible, setCreateCardVisible] = useState(true);
 
   const addNewTextBoxes = () => {
     setTextboxes([...textboxes, { front: '', back: '' }]); // Add two empty text boxes as an object
-    var create_card_button = document.querySelectorAll('.create_card_button');
     // Make the create card button disappear
-    for (var button of create_card_button) {
-      button.style.display = 'none';
-    }
+    setCreateCardVisible(false);
   };
 
   const handleTextChange = (index, inputName, value) => {
@@ -28,16 +26,12 @@ function HomePage() {
   const handleSave = (index) => {
     return new Promise((resolve, reject) => {
       const textToSave = [textboxes[index].front, textboxes[index].back]; // Create a tuple from the text boxes
-      // Remove textboxes when saved to the database
-      var boxes = document.querySelectorAll('.centered-textbox');
-      for (var textbox of boxes) {
-        textbox.remove();
-      }
+      // Removes the textboxes
+      setTextboxes((prevTextboxes) =>
+        prevTextboxes.filter((_, i) => i !== index)
+      );
       // Make the create a card button reappear for the next entry
-      var create_card_button = document.querySelectorAll('.create_card_button');
-      for (var button of create_card_button) {
-        button.style.display = 'inline';
-      }
+      setCreateCardVisible(true);
       // Send a POST request to your Flask server with the tuple data
       fetch('/save-tuple', {
         method: 'POST',
@@ -60,22 +54,6 @@ function HomePage() {
 
   };
 
-  // const updateWordList = () => {
-  //   fetch('/retrieve-all-cards', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }).then(res => res.json())
-  //     .then((res) => {
-  //       var div = document.getElementById('wordlist');
-  //       div.innerHTML = '';
-  //         for (var obj of res) {
-  //           div.innerHTML += `<button className="word">${obj}</button>`;
-  //         }
-  //     });
-  // };
-
   const editFlashcard = (word) => {
     // Handle button click logic with the wordId
     console.log(`Editing flashcard with ID: ${word}`);
@@ -91,7 +69,10 @@ function HomePage() {
       <Header className="header"/>
       <div className="main-container">
         <div className="flashcard-container">
-          <button onClick={addNewTextBoxes} className="create_card_button">
+          <button onClick={addNewTextBoxes} 
+            className="create_card_button" 
+            style={{'display': `${createCardVisible ? 'inline' : 'none'}`}}
+          >
             Create Two Text Boxes
           </button>
           {textboxes.map((text, index) => (
