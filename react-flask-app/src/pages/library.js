@@ -1,11 +1,18 @@
-import "../styles/library.css"
+import "../styles/library.css";
 
 import Header from "../components/header";
 import Wordbox from "../components/wordbox";
+import Flipflashcard from "../components/flipFlashcard";
 
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 function Library() {
+
+  const viewFlashcard = (word) => {
+    // Handle button click logic with the wordId
+    console.log(`Viewing flashcard with ID: ${word}`);
+  };
+
   return(
     
     <Box className="content-container">
@@ -13,16 +20,10 @@ function Library() {
       
       <Box className="main-container">
         <Box className="flashcard-container">
-          <Card>
-            <CardContent>
-              <Typography>
-                THIS IS WHERE THE FLASH CARD GOES
-              </Typography>
-            </CardContent>
-          </Card>
+          <Flipflashcard/>
         </Box>
 
-        <Wordbox/>
+        <Wordbox onButtonClick={viewFlashcard}/>
 
       </Box>
     </Box>

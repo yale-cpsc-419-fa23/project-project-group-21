@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Stack, Box, Button } from '@mui/material';
+import { Stack, Box } from '@mui/material';
 import '../styles/wordbox.css';
 
-function Wordbox () {
+function Wordbox ({ onButtonClick, updateBox }) {
   const [showTagInput, setShowTagInput] = useState(false);
   const [tagInput, setTagInput] = useState(''); // Initialize the tag input state variable
+  const [words, setWords] = useState([]);
 
   const handleTagButtonClick = () => {
     setShowTagInput(true); // Show the tag input when the button is clicked
@@ -35,24 +36,33 @@ function Wordbox () {
   };
 
   const updateWordList = () => {
-    fetch('/retrieve-all-cards', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-      .then((res) => {
-        var div = document.getElementById('wordlist');
-        div.innerHTML = '';
-          for (var obj of res) {
-            div.innerHTML += `<Button className="word">${obj}</Button>`;
-          }
-      });
+    return new Promise((resolve, reject) => {
+      fetch('/retrieve-all-cards', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.json())
+        .then((res) => {
+          setWords(res);
+          resolve("Words found");
+        });
+    });
   };
 
+  // RETURN ID NUMBER
+  const handleWordClick = (word) => {
+    onButtonClick(word);
+  }
+
   useEffect(() => {
-    updateWordList();
-  }, []);
+    const updateWords = async () => {
+      await updateWordList();
+    };
+
+    updateWords();
+
+  }, [updateBox]);
 
   return(
 
@@ -63,6 +73,11 @@ function Wordbox () {
       </Box>
 
       <Box id="wordlist" className="wordlist">
+        {words.map((word) => (
+          <button key={word} className="word" onClick={() => handleWordClick(word)}>
+            {word}
+          </button>
+        ))}
       </Box>
 
       <Box className="tag-container">
