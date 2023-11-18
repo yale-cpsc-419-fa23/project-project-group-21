@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import '../styles/homepage.css';
 import Header from '../components/header';
-import Button from '@mui/material/Button';
 import Wordbox from '../components/wordbox';
+import Dropdown from '../components/dropdown';
+import Button from '@mui/material/Button';
 
 function HomePage() {
   const [textboxes, setTextboxes] = useState([]);
@@ -106,6 +107,7 @@ function HomePage() {
               <button onClick={() => {handleSaveButtonClick(index)}} className="create_card_button">
                 Save Tuple
               </button>
+              <Dropdown/>
             </div>
           ))}
           <div className="centered-text">
