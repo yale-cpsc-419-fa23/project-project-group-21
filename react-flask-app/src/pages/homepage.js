@@ -12,7 +12,7 @@ function HomePage() {
   const [createCardVisible, setCreateCardVisible] = useState(true);
 
   const addNewTextBoxes = () => {
-    setTextboxes([...textboxes, { front: '', back: '' }]); // Add two empty text boxes as an object
+    setTextboxes([...textboxes, { front: "", back: "" }]); // Add two empty text boxes as an object
     // Make the create card button disappear
     setCreateCardVisible(false);
   };
@@ -55,8 +55,10 @@ function HomePage() {
   };
 
   const editFlashcard = (word) => {
-    // Handle button click logic with the wordId
-    console.log(`Editing flashcard with ID: ${word}`);
+    // Clear all previous items
+    setCreateCardVisible(false);
+    // Change the textbox text
+    setTextboxes([{ front: word[0], back: word[1] }]);
   };
 
   const handleSaveButtonClick = async (index) => {
@@ -81,14 +83,14 @@ function HomePage() {
                 rows="4"
                 cols="50"
                 placeholder="Front"
-                value={text.text1}
+                value={text.front}
                 onChange={(e) => handleTextChange(index, 'front', e.target.value)}
               />
               <textarea
                 rows="4"
                 cols="50"
                 placeholder="Back"
-                value={text.text2}
+                value={text.back}
                 onChange={(e) => handleTextChange(index, 'back', e.target.value)}
               />
               <button onClick={() => {handleSaveButtonClick(index)}} className="create_card_button">

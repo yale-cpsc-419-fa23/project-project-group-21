@@ -91,6 +91,22 @@ class Database:
         connection.commit()
         connection.close()
 
+    def edit_card(self, front, back, card_id, tag_id):
+        data = (front, back, tag_id, card_id)
+        print(data)
+        self.card_id += 1 # increment card_id after setting it to current card.
+        statement = """UPDATE cards
+                        SET front = ?,
+                            back = ?,
+                            tag_id = ?
+                        WHERE id = ?"""
+        connection = sqlite3.connect(self.db_url)
+        self.execute_statement(connection=connection,
+                               statement=statement,
+                               data=data)
+        connection.commit()
+        connection.close()
+
     def add_tag(self, name):
         # ERROR: if inputting the tag reaches an error(executing) then the tag_id increases regardless
         # ERROR: put UNIQUE names
