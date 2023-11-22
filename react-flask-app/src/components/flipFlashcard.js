@@ -11,7 +11,7 @@ function Flipflashcard({ word }) {
   useEffect(() => {
     setShowFront(true);
   }, [word]);
-
+  
   return(
     <Box className="flip-flashcard-container">
       <CSSTransition 
@@ -27,5 +27,4 @@ function Flipflashcard({ word }) {
     </Box>
   )       
 }
-
 export default Flipflashcard;
