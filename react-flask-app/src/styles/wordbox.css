@@ -17,6 +17,7 @@
 .wordlist {
   /* background-color: blue; */
   flex: 7;
+  width: 100%;
 }
 
 /* .word:active {

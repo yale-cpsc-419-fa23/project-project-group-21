@@ -78,7 +78,7 @@ function Wordbox ({ onButtonClick, updateBox }) {
         <List className="mainlist" 
           sx={{
             width: '100%',
-            maxWidth: 275,
+            maxWidth: 300,
             position: 'relative',
             overflow: 'auto',
             maxHeight: 500,
