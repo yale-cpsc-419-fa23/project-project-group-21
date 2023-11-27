@@ -19,9 +19,9 @@
   flex: 7;
 }
 
-.word {
-  /* background-color: pink; */
-}
+/* .word:active {
+  background-color: pink;
+} */
 
 .tag-container {
   flex: 0;

@@ -6,6 +6,7 @@ function Wordbox ({ onButtonClick, updateBox }) {
   const [showTagInput, setShowTagInput] = useState(false);
   const [tagInput, setTagInput] = useState(''); // Initialize the tag input state variable
   const [words, setWords] = useState([]);
+  const [currWord, setCurrWord] = useState('');
 
   const handleTagButtonClick = () => {
     setShowTagInput(true); // Show the tag input when the button is clicked
@@ -52,6 +53,7 @@ function Wordbox ({ onButtonClick, updateBox }) {
 
   // RETURN ID NUMBER
   const handleWordClick = (word) => {
+    setCurrWord(word);
     onButtonClick(word);
   }
 
@@ -83,7 +85,7 @@ function Wordbox ({ onButtonClick, updateBox }) {
           }}
         > 
           {words.map((word) => (
-            <ListItemButton onClick={() => handleWordClick(word)}>
+            <ListItemButton selected={ word === currWord} onClick={() => handleWordClick(word)}>
               <ListItemText primary={word} />
             </ListItemButton>
           ))}
