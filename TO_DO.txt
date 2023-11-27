@@ -2,6 +2,10 @@ Test Page set up - THOMAS
     Be able to swipe through flash cards, no word list
 
 Change wordbox to pull from database in these situations:
-    3: Word is edited (CAN'T BE DONE YET)
     4: Word tag is edited (CAN'T BE DONE YET)
 
+Change the tag of the edited word
+
+Fix the tag add
+    There is currently a bug where the first tag added
+    will apply to all cards thereafter
