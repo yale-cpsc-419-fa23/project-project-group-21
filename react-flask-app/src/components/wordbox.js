@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, List, ListItemButton, ListItemText } from '@mui/material';
 import '../styles/wordbox.css';
 
 function Wordbox ({ onButtonClick, updateBox }) {
@@ -73,11 +73,26 @@ function Wordbox ({ onButtonClick, updateBox }) {
       </Box>
 
       <Box id="wordlist" className="wordlist">
-        {words.map((word) => (
-          <button key={word} className="word" onClick={() => handleWordClick(word)}>
-            {word}
-          </button>
-        ))}
+        <List className="mainlist" 
+          sx={{
+            width: '100%',
+            maxWidth: 275,
+            position: 'relative',
+            overflow: 'auto',
+            maxHeight: 500,
+          }}
+        > 
+          {words.map((word) => (
+            <ListItemButton onClick={() => handleWordClick(word)}>
+              <ListItemText primary={word} />
+            </ListItemButton>
+          ))}
+          {/* {words.map((word) => (
+            <button key={word} className="word" onClick={() => handleWordClick(word)}>
+              {word}
+            </button>
+          ))} */}
+        </List>
       </Box>
 
       <Box className="tag-container">

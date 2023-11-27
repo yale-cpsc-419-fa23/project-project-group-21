@@ -5,22 +5,22 @@
   border-radius: 15px;
   margin-top: 45px;
   height: 650px;
-  background-color: red;
+  /* background-color: red; */
 }
 
 .wordbox-header {
   font-family: Arial;
   flex: 1;
-  background-color: orange;
+  /* background-color: orange; */
 }
 
 .wordlist {
-  background-color: blue;
+  /* background-color: blue; */
   flex: 7;
 }
 
 .word {
-  background-color: pink;
+  /* background-color: pink; */
 }
 
 .tag-container {
