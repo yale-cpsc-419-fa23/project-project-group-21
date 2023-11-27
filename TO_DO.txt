@@ -9,3 +9,11 @@ Change the tag of the edited word
 Fix the tag add
     There is currently a bug where the first tag added
     will apply to all cards thereafter
+
+Make the flashcard prettier
+    Change colors
+    Change outline of the box
+
+Overall Website prettiness
+    Header Color
+    Things like that 

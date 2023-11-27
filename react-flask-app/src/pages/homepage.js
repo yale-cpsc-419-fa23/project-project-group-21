@@ -3,7 +3,6 @@ import '../styles/homepage.css';
 import Header from '../components/header';
 import Wordbox from '../components/wordbox';
 import Dropdown from '../components/dropdown';
-import Button from '@mui/material/Button';
 
 function HomePage() {
   const [textboxes, setTextboxes] = useState([]);
@@ -144,10 +143,7 @@ function HomePage() {
         </div>
         <Wordbox onButtonClick={editFlashcard} updateBox={updateBox}/>
       </div>
-      <div className="button-container">
-      <Button variant="contained">Show All Tags</Button>
     </div>
-  </div>
   );
 }
 
