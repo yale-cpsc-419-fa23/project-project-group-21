@@ -91,14 +91,11 @@ class Database:
         connection.commit()
         connection.close()
 
-    def edit_card(self, front, back, card_id, tag_id):
-        data = (front, back, tag_id, card_id)
-        print(data)
-        self.card_id += 1 # increment card_id after setting it to current card.
+    def edit_card(self, front, back, card_id):
+        data = (front, back, str(card_id))
         statement = """UPDATE cards
                         SET front = ?,
-                            back = ?,
-                            tag_id = ?
+                            back = ?
                         WHERE id = ?"""
         connection = sqlite3.connect(self.db_url)
         self.execute_statement(connection=connection,

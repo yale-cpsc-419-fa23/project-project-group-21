@@ -26,6 +26,17 @@ def save_tuple():
     db.add_card(front, back, 0)
     return 'Card saved', 200
 
+@app.route('/edit-card', methods=['POST'])
+def edit_card():
+    data = request.get_json()
+    card_data = data['cardTuple']
+    front = card_data[0]
+    back = card_data[1]
+    card_id = data['id']
+    db.edit_card(front, back, card_id)
+    return 'Card saved', 200
+
+
 @app.route('/retrieve-all-cards', methods=['GET'])
 def retrieve_all_cards():
     cards = db.retrieve_cards()

@@ -10,6 +10,8 @@ function HomePage() {
   const [savedText, setSavedText] = useState(''); // To store the saved text
   const [updateBox, setUpdateBox] = useState(0);
   const [createCardVisible, setCreateCardVisible] = useState(true);
+  const [edit, setEdit] = useState(false);
+  const [id, setId] = useState(0);
 
   const addNewTextBoxes = () => {
     setTextboxes([...textboxes, { front: "", back: "" }]); // Add two empty text boxes as an object
@@ -54,15 +56,52 @@ function HomePage() {
 
   };
 
+  const handleEdit = (index) => {
+    return new Promise((resolve, reject) => {
+      setEdit(false);
+      const textToSave = [textboxes[index].front, textboxes[index].back]; // Create a tuple from the text boxes
+      // Removes the textboxes
+      setTextboxes((prevTextboxes) =>
+        prevTextboxes.filter((_, i) => i !== index)
+      );
+      // Make the create a card button reappear for the next entry
+      setCreateCardVisible(true);
+      // Send a POST request to your Flask server with the tuple data
+      fetch('/edit-card', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cardTuple: textToSave, id: id }),
+      })
+        .then((response) => {
+          // Handle the response from the server if needed
+          if (response.status === 200) {
+            setSavedText(textToSave.join(', '));
+            resolve('Saved to database.');
+          }
+        })
+        .catch((error) => {
+          // Handle errors if the request fails
+        });
+      });
+  }
+
   const editFlashcard = (word) => {
     // Clear all previous items
     setCreateCardVisible(false);
     // Change the textbox text
     setTextboxes([{ front: word[0], back: word[1] }]);
+    setEdit(true);
+    setId(word[2]);
   };
 
   const handleSaveButtonClick = async (index) => {
-    await handleSave(index);
+    if(edit === true) {
+      await handleEdit(index);
+    } else {
+      await handleSave(index);
+    }
     setUpdateBox(updateBox + 1);
   }
 
