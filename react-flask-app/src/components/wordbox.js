@@ -110,7 +110,7 @@ function Wordbox ({ onButtonClick, updateBox }) {
             <button onClick={() => createTagName(tagInput)}>Submit</button>
           </Box>
         ) : (
-          <button onClick={handleTagButtonClick}>Make your tags here</button>
+          <button onClick={handleTagButtonClick} style={{backgroundColor: 'lightskyblue',}}>Make your tags here</button>
         )}
       </Box>
 

@@ -111,7 +111,7 @@ function HomePage() {
         <div className="flashcard-container">
           <button onClick={addNewTextBoxes} 
             className="create_card_button" 
-            style={{'display': `${createCardVisible ? 'inline' : 'none'}`}}
+            style={{'display': `${createCardVisible ? 'inline' : 'none'}`, backgroundColor: 'lightskyblue',}}
           >
             Create Two Text Boxes
           </button>
