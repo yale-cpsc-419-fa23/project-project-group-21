@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/test.css';
 import Header from '../components/header';
-import {
-  Select,
-  InputLabel,
-  MenuItem,
-  Button,
-  Box,
-  Typography,
-} from '@mui/material';
+import { Select, InputLabel, MenuItem, Button, Box, Typography } from '@mui/material';
+import Flipflashcard from '../components/flipFlashcard';
 
-// New Flashcard component to render flashcard data
-const FlashcardDisplay = ({ flashcards }) => (
-  <div>
-    <h2>All Flashcards</h2>
-    <ul>
-      {flashcards.map((flashcard, index) => (
-        <li key={index}>
-          <strong>Front:</strong> {flashcard[0]}
-          <br />
-          <strong>Back:</strong> {flashcard[1]}
-          <br />
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+function FlashcardContainer({ flashcards }) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+  
+    const handleNext = () => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+    };
+  
+    const handlePrevious = () => {
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
+    };
+  
+    return (
+      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+        <Flipflashcard word={flashcards[currentIndex]} />
+        <Box display="flex" justifyContent="space-between" width="100%" marginTop="10px">
+          <Button variant="contained" onClick={handlePrevious}>
+            Previous
+          </Button>
+          <Button variant="contained" onClick={handleNext}>
+            Next
+          </Button>
+        </Box>
+      </Box>
+    );
+  }
 
 function Test() {
   const [selectedValue, setSelectedValue] = React.useState('');
   const [tags, setTags] = useState([]);
-  const [flashcards, setFlashcards] = useState([]); // State to store flashcards data
+  const [flashcards, setFlashcards] = useState([]);
   const [flashcardsMessage, setFlashcardsMessage] = useState('');
-  const [displayFlashcards, setDisplayFlashcards] = useState(false);
 
   useEffect(() => {
     // Make a GET request to your Flask API endpoint
@@ -75,9 +77,7 @@ function Test() {
         .then((response) => response.json())
         .then((data) => {
           if (data && data.length > 0) {
-            // Set flashcards data and display the FlashcardDisplay component
             setFlashcards(data);
-            setDisplayFlashcards(true);
           } else {
             setFlashcardsMessage('You have not created any flashcards yet.');
           }
@@ -87,19 +87,21 @@ function Test() {
   };
 
   return (
-    <Box>
+    <Box
+      height="100vh"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+    >
       <Header />
       <div className="testing-container">
-        {/* Conditionally render original components or FlashcardDisplay */}
-        {displayFlashcards ? (
-          <FlashcardDisplay flashcards={flashcards} />
+        {flashcards.length > 0 ? (
+          <FlashcardContainer flashcards={flashcards} />
         ) : (
           <>
             <div className="label-container">
-              <InputLabel
-                id="flashcard-select-label"
-                style={{ fontWeight: 'bold' }}
-              >
+              <InputLabel id="flashcard-select-label" style={{ fontWeight: 'bold' }}>
                 Choose which flashcards you would like to test
               </InputLabel>
             </div>
