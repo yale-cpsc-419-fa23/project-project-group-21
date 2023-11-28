@@ -6,12 +6,13 @@ import Flipflashcard from "../components/flipFlashcard";
 
 import { useState } from "react";
 
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 function Library() {
   const [currentWord, setCurrentWord] = useState([])
 
   const viewFlashcard = (word) => {
+    console.log(currentWord);
     console.log(`Viewing flashcard with ID: ${word}`);
     setCurrentWord(word);
   };
@@ -23,7 +24,10 @@ function Library() {
       
       <Box className="main-container">
         <Box className="flashcard-container">
-          <Flipflashcard word={currentWord}/>
+          {currentWord.length === 0 ? 
+            <Typography>Please Select A Word To View</Typography> :
+            <Flipflashcard word={currentWord}/> 
+          }
         </Box>
 
         <Wordbox onButtonClick={viewFlashcard}/>
