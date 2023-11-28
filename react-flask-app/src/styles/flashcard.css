@@ -29,10 +29,10 @@
 }
 
 .card-front {
-  background-color: rgb(43, 120, 202);
+  background-color: lightskyblue;
 }
 
 .card-back {
-  background-color: orange;
+  background-color: lightskyblue;
   transform: rotateY(180deg);
 }
