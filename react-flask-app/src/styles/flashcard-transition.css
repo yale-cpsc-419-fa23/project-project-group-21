@@ -1,0 +1,25 @@
+/* flashcard-transition.css */
+
+.flashcard-transition-enter {
+    opacity: 0;
+    transform: translateX(-100%) scale(0.8); /* Move left and scale down */
+    z-index: 1; /* Move behind the next card */
+  }
+  
+  .flashcard-transition-enter-active {
+    opacity: 1;
+    transform: translateX(0) scale(1); /* Move to the center and normal scale */
+    transition: opacity 300ms, transform 300ms, z-index 300ms; /* Add z-index to the transition */
+  }
+  
+  .flashcard-transition-exit {
+    opacity: 1;
+    transform: translateX(0) scale(1); /* Stay at the center and normal scale */
+  }
+  
+  .flashcard-transition-exit-active {
+    opacity: 0;
+    transform: translateX(100%) scale(0.8); /* Move right and scale down */
+    transition: opacity 300ms, transform 300ms, z-index 0 300ms; /* Add z-index to the transition */
+  }
+  
