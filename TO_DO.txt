@@ -1,19 +1,6 @@
 Test Page set up - THOMAS
-    Be able to swipe through flash cards, no word list
+    Can't select the specific folder yet 
+    Must do stuff with passing the tag id to the databse 
 
 Change wordbox to pull from database in these situations:
     4: Word tag is edited (CAN'T BE DONE YET)
-
-Change the tag of the edited word
-
-Fix the tag add
-    There is currently a bug where the first tag added
-    will apply to all cards thereafter
-
-Make the flashcard prettier
-    Change colors
-    Change outline of the box
-
-Overall Website prettiness
-    Header Color
-    Things like that 
