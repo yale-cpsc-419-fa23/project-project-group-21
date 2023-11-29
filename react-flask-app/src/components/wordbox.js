@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Stack, Box, List, ListItemButton, ListItemText } from '@mui/material';
+import { Stack, Box, List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import '../styles/wordbox.css';
 
 function Wordbox ({ onButtonClick, updateBox }) {
@@ -86,14 +86,15 @@ function Wordbox ({ onButtonClick, updateBox }) {
         > 
           {words.map((word) => (
             <ListItemButton selected={ word === currWord} onClick={() => handleWordClick(word)}>
-              <ListItemText primary={word} />
+              <ListItemText primary={ 
+                <Typography>
+                  <span style={{ fontWeight: 'bold' }}>front:</span> {word[0]}{' '}
+                  <span style={{ fontWeight: 'bold' }}>back:</span> {word[1]}{' '}
+                  <span style={{ fontWeight: 'bold' }}>tag:</span> {word[3]}{' '}
+                </Typography>
+              } />
             </ListItemButton>
           ))}
-          {/* {words.map((word) => (
-            <button key={word} className="word" onClick={() => handleWordClick(word)}>
-              {word}
-            </button>
-          ))} */}
         </List>
       </Box>
 
