@@ -86,13 +86,15 @@ function Wordbox ({ onButtonClick, updateBox }) {
         > 
           {words.map((word) => (
             <ListItemButton selected={ word === currWord} onClick={() => handleWordClick(word)}>
-              <ListItemText primary={ 
-                <Typography>
-                  <span style={{ fontWeight: 'bold' }}>front:</span> {word[0]}{' '}
-                  <span style={{ fontWeight: 'bold' }}>back:</span> {word[1]}{' '}
-                  <span style={{ fontWeight: 'bold' }}>tag:</span> {word[3]}{' '}
-                </Typography>
-              } />
+              <ListItemText 
+                primary={ 
+                  <Typography>
+                    <span style={{ fontWeight: 'bold' }}>front:</span> {word[0]}{' '}
+                    <span style={{ fontWeight: 'bold' }}>back:</span> {word[1]}{' '}
+                    <span style={{ fontWeight: 'bold' }}>tag:</span> {word[3]}{' '}
+                  </Typography>
+                } 
+              />
             </ListItemButton>
           ))}
         </List>

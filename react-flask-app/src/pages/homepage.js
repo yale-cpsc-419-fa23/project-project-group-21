@@ -11,6 +11,7 @@ function HomePage() {
   const [createCardVisible, setCreateCardVisible] = useState(true);
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(0);
+  const [tagId, setTagId] = useState(-1);
 
   const addNewTextBoxes = () => {
     setTextboxes([...textboxes, { front: "", back: "" }]); // Add two empty text boxes as an object
@@ -39,7 +40,7 @@ function HomePage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ cardTuple: textToSave }),
+        body: JSON.stringify({ cardTuple: textToSave, tagId: tagId }),
       })
         .then((response) => {
           // Handle the response from the server if needed
@@ -71,7 +72,7 @@ function HomePage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ cardTuple: textToSave, id: id }),
+        body: JSON.stringify({ cardTuple: textToSave, id: id, tagId: tagId }),
       })
         .then((response) => {
           // Handle the response from the server if needed
@@ -95,6 +96,10 @@ function HomePage() {
     setId(word[2]);
   };
 
+  const handleTagId = (id) => {
+    setTagId(id);
+  } 
+
   const handleSaveButtonClick = async (index) => {
     if(edit === true) {
       await handleEdit(index);
@@ -102,6 +107,7 @@ function HomePage() {
       await handleSave(index);
     }
     setUpdateBox(updateBox + 1);
+    setTagId(-1);
   }
 
   return (
@@ -134,7 +140,7 @@ function HomePage() {
               <button onClick={() => {handleSaveButtonClick(index)}} className="create_card_button">
                 Save Tuple
               </button>
-              <Dropdown/>
+              <Dropdown setTagId={handleTagId}/>
             </div>
           ))}
           <div className="centered-text">
