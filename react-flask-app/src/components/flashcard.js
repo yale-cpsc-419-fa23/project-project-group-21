@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import "../styles/flashcard.css";
 import "../styles/fliptransition.css";
 
@@ -7,10 +7,10 @@ function Flashcard({ onClick, word }) {
   return (
     <Box className="flashcard" onClick={onClick}>
       <Box className="card-back">
-        {word[1]}
+        <Typography variant='h5'>{word[1]}</Typography>
       </Box>
       <Box className="card-front">
-        {word[0]}
+      <Typography variant='h5'>{word[0]}</Typography>
       </Box>
     </Box>
   );

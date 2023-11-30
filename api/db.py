@@ -91,11 +91,12 @@ class Database:
         connection.commit()
         connection.close()
 
-    def edit_card(self, front, back, card_id):
-        data = (front, back, str(card_id))
+    def edit_card(self, front, back, card_id, tag_id):
+        data = (front, back, str(card_id), str(tag_id))
         statement = """UPDATE cards
                         SET front = ?,
-                            back = ?
+                            back = ?,
+                            tag_id = ?
                         WHERE id = ?"""
         connection = sqlite3.connect(self.db_url)
         self.execute_statement(connection=connection,
@@ -153,7 +154,7 @@ class Database:
         return cursor.fetchall()
 
     def retrieve_tags(self):
-        statement = """SELECT tags.name
+        statement = """SELECT tags.name, tags.id
                     FROM tags
                     ORDER BY tags.name ASC"""
         connection, cursor = self.db_connect()

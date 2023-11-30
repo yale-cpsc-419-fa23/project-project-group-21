@@ -6,8 +6,9 @@ import Select from '@mui/material/Select';
 
 import React, { useState, useEffect } from 'react';
 
-function Dropdown() {
+function Dropdown({ setTagId }) {
   const [tags, setTags] = useState([]);
+  const [selectedTag, setSelectedTag] = useState('');
 
   // Function to fetch data from the API
   const fetchData = async () => {
@@ -31,6 +32,11 @@ function Dropdown() {
   };
 
 
+  const handleTagChange = (event) => {
+    setSelectedTag(event.target.value);
+    setTagId(event.target.value[1]);
+  }
+
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -38,11 +44,13 @@ function Dropdown() {
         <Select
           id="tag-dropdown"
           label="Tag"
+          value={selectedTag}
+          onChange={handleTagChange}
           onOpen={handleMenuOpen}
         >
           {tags.map((tag, index) => (
             <MenuItem key={index} value={tag}>
-              {tag}
+              {tag[0]}
             </MenuItem>
           ))}
         </Select>
