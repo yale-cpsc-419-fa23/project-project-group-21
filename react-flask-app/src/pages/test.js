@@ -7,40 +7,54 @@ import Flipflashcard from '../components/flipFlashcard';
 import '../styles/flashcard-transition.css';
 
 function FlashcardContainer({ flashcards }) {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const flashcardRef = useRef(null); // Add a ref for CSSTransition
-  
-    const handleNext = () => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
-    };
-  
-    const handlePrevious = () => {
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
-    };
-  
-    return (
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-        <CSSTransition
-            in={true}
-            timeout={300}
-            classNames="flashcard-transition"
-            key={`${currentIndex}-${flashcards[currentIndex]?.join('-')}`}
-            unmountOnExit
-            nodeRef={flashcardRef} // Add the ref here
-        >       
-            <Flipflashcard word={flashcards[currentIndex]} />
-        </CSSTransition>
-        <Box display="flex" justifyContent="space-between" width="100%" marginTop="10px">
-          <Button variant="contained" onClick={handlePrevious}>
-            Previous
-          </Button>
-          <Button variant="contained" onClick={handleNext}>
-            Next
-          </Button>
-        </Box>
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const flashcardRef = useRef(null);
+
+  const handleNext = () => {
+    if (currentIndex < flashcards.length - 1) {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prevIndex) => prevIndex - 1);
+    }
+  };
+
+  const flashcardCounter = `${currentIndex + 1}/${flashcards.length}`;
+
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+      <Typography variant="subtitle1" style={{ marginBottom: '10px' }}>
+        Flashcard {flashcardCounter}
+      </Typography>
+      <CSSTransition
+        in={true}
+        timeout={300}
+        classNames="flashcard-transition"
+        key={`${currentIndex}-${flashcards[currentIndex]?.join('-')}`}
+        unmountOnExit
+        nodeRef={flashcardRef}
+      >
+        <Flipflashcard word={flashcards[currentIndex]} />
+      </CSSTransition>
+      <Box display="flex" justifyContent="space-between" width="100%" marginTop="10px">
+        <Button variant="contained" onClick={handlePrevious} disabled={currentIndex === 0}>
+          Previous
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleNext}
+          disabled={currentIndex === flashcards.length - 1}
+        >
+          Next
+        </Button>
       </Box>
-    );
-  }
+    </Box>
+  );
+}
+
 
 function Test() {
   const [selectedValue, setSelectedValue] = React.useState('');
