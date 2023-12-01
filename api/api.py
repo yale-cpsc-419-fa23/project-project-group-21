@@ -1,6 +1,7 @@
 import time
 from flask import Flask, request, jsonify
 from db import Database, DB_URL
+# from kanji import
 
 db = Database(DB_URL)
 app = Flask(__name__)
@@ -63,6 +64,9 @@ def retrieve_cards_tag():
     cards = db.retrieve_cards_tag(tag_name)
     return jsonify(cards), 200
 
+@app.route('/retrieve-kanji', methods=['POST'])
+def retrieve_kanji():
+    return jsonify("test"), 200
 
 # @app.route('/get-saved-text', methods=['GET'])
 # def get_saved_text():
