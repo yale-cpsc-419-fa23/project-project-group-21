@@ -51,9 +51,16 @@ const DrawingCanvas = () => {
     };
   }, [isDrawing]);
 
+  const handleClearCanvas = () => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  };
+
   const handleRecognizeHandwriting = async () => {
     const canvas = canvasRef.current;
     const dataURL = canvas.toDataURL('image/png');
+    // console.log('DataURL:', dataURL);
 
     try {
       const response = await fetch('/retrieve-kanji', {
@@ -81,6 +88,7 @@ const DrawingCanvas = () => {
         className="drawing-canvas"
       />
       <Box className="button-container">
+        <button onClick={handleClearCanvas}>Clear Canvas</button>
         <button onClick={handleRecognizeHandwriting}>Recognize Handwriting</button>
       </Box>
     </Box>

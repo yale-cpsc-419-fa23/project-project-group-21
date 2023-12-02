@@ -1,10 +1,11 @@
 import time
 from flask import Flask, request, jsonify
 from db import Database, DB_URL
-# from kanji import
+from kanji import Predictor
 
 db = Database(DB_URL)
 app = Flask(__name__)
+predictor = Predictor()
 
 # @app.route('/save-card', methods=['POST'])
 # def save_card():
@@ -66,7 +67,10 @@ def retrieve_cards_tag():
 
 @app.route('/retrieve-kanji', methods=['POST'])
 def retrieve_kanji():
-    return jsonify("test"), 200
+    data = request.get_json()
+    image = data['image']
+    kanji = predictor.predict(image, 1)
+    return jsonify(kanji), 200
 
 # @app.route('/get-saved-text', methods=['GET'])
 # def get_saved_text():
