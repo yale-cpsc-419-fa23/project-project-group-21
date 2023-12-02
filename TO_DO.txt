@@ -8,4 +8,4 @@ On homepage
     Word in wordbox clicked
     Make the word's tag appear
 
-Kanji recognition - KEVIN
+Have the kanji appear when checked! all the logic is done, just needs HTML to display -KEVIN
