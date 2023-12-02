@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
-import '../styles/test.css';
-import { CSSTransition } from 'react-transition-group';
-import Header from '../components/header';
+import React, { useEffect, useState, } from 'react';
 import { Select, InputLabel, MenuItem, Button, Box, Typography } from '@mui/material';
+
+import Header from '../components/header';
 import Flipflashcard from '../components/flipFlashcard';
-import '../styles/flashcard-transition.css';
+
+import '../styles/test.css';
+
 
 function FlashcardContainer({ flashcards }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const flashcardRef = useRef(null);
 
   const handleNext = () => {
     if (currentIndex < flashcards.length - 1) {
@@ -29,16 +29,7 @@ function FlashcardContainer({ flashcards }) {
       <Typography variant="subtitle1" style={{ marginBottom: '10px' }}>
         Flashcard {flashcardCounter}
       </Typography>
-      <CSSTransition
-        in={true}
-        timeout={300}
-        classNames="flashcard-transition"
-        key={`${currentIndex}-${flashcards[currentIndex]?.join('-')}`}
-        unmountOnExit
-        nodeRef={flashcardRef}
-      >
-        <Flipflashcard word={flashcards[currentIndex]} />
-      </CSSTransition>
+      <Flipflashcard word={flashcards[currentIndex]} />
       <Box display="flex" justifyContent="space-between" width="100%" marginTop="10px">
         <Button variant="contained" onClick={handlePrevious} disabled={currentIndex === 0}>
           Previous
@@ -63,7 +54,7 @@ function Test() {
   const [flashcardsMessage, setFlashcardsMessage] = useState('');
 
   useEffect(() => {
-    // Make a GET request to your Flask API endpoint
+    // Make a GET request to Flask API endpoint
     fetch('/retrieve-all-tags')
       .then((response) => response.json())
       .then((data) => setTags(data))
@@ -83,33 +74,28 @@ function Test() {
       },
       body: JSON.stringify({ tag }),
     })
-      .then((response) => {
-        if (response.status === 200) {
-          // Handle success
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.length > 0) {
+          setFlashcards(data);
         } else {
-          // Handle other responses or errors
+          setFlashcardsMessage('You have not created any flashcards with this tag yet.')
         }
       })
-      .catch((error) => {
-        // Handle errors if the request fails
-      });
+      .catch((error) => console.error('Error fetching flashcards:', error));
   };
 
   const handleAllFlashcards = () => {
-    if (selectedValue) {
-      getCardsTag(selectedValue);
-    } else {
-      fetch('/retrieve-all-cards')
-        .then((response) => response.json())
-        .then((data) => {
-          if (data && data.length > 0) {
-            setFlashcards(data);
-          } else {
-            setFlashcardsMessage('You have not created any flashcards yet.');
-          }
-        })
-        .catch((error) => console.error('Error fetching flashcards:', error));
-    }
+    fetch('/retrieve-all-cards')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.length > 0) {
+          setFlashcards(data);
+        } else {
+          setFlashcardsMessage('You have not created any flashcards yet.');
+        }
+      })
+      .catch((error) => console.error('Error fetching flashcards:', error));
   };
 
   return (
@@ -151,11 +137,17 @@ function Test() {
                   <em>Choose a tag</em>
                 </MenuItem>
                 {tags.map((tag) => (
-                  <MenuItem key={tag} value={tag}>
+                  <MenuItem 
+                    key={tag} 
+                    value={tag}
+                  >
                     {tag}
                   </MenuItem>
                 ))}
               </Select>
+              <Button variant="contained">
+                Test Tag
+              </Button>
             </div>
             {flashcardsMessage && (
               <Typography
