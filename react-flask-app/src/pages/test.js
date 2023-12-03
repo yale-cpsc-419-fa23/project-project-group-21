@@ -8,21 +8,21 @@ import '../styles/test.css';
 
 
 function FlashcardContainer({ flashcards }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0); // state to keep track of flashcard counter
 
-  const handleNext = () => {
+  const handleNext = () => { // Update flashcard counter on 'next'
     if (currentIndex < flashcards.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }
   };
 
-  const handlePrevious = () => {
+  const handlePrevious = () => { // Update flashcard counter on 'previous'
     if (currentIndex > 0) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
     }
   };
 
-  const flashcardCounter = `${currentIndex + 1}/${flashcards.length}`;
+  const flashcardCounter = `${currentIndex + 1}/${flashcards.length}`; // actual counter 'component'
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
@@ -31,7 +31,11 @@ function FlashcardContainer({ flashcards }) {
       </Typography>
       <Flipflashcard word={flashcards[currentIndex]} />
       <Box display="flex" justifyContent="space-between" width="100%" marginTop="10px">
-        <Button variant="contained" onClick={handlePrevious} disabled={currentIndex === 0}>
+        <Button 
+          variant="contained" 
+          onClick={handlePrevious} 
+          disabled={currentIndex === 0}
+        >
           Previous
         </Button>
         <Button
@@ -48,13 +52,12 @@ function FlashcardContainer({ flashcards }) {
 
 
 function Test() {
-  const [selectedValue, setSelectedValue] = React.useState('');
-  const [tags, setTags] = useState([]);
+  const [selectedValue, setSelectedValue] = useState('');
+  const [tags, setTags] = useState([]); // storing current tags, they update on each reloading of the test page
   const [flashcards, setFlashcards] = useState([]);
   const [flashcardsMessage, setFlashcardsMessage] = useState('');
 
-  useEffect(() => {
-    // Make a GET request to Flask API endpoint
+  useEffect(() => { // Make a GET request to Flask API endpoint
     fetch('/retrieve-all-tags')
       .then((response) => response.json())
       .then((data) => setTags(data))
@@ -63,23 +66,29 @@ function Test() {
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
-    getCardsTag(event.target.value);
+    // getCardsTag(event.target.value);
+  };
+
+  const handleTestTag = () => {
+    if (selectedValue) {
+      getCardsTag(selectedValue);
+    }
   };
 
   const getCardsTag = (tag) => {
-    fetch('retrieve-cards-tag', {
+    console.log(tag);
+    fetch(`/retrieve-cards-tag?tag=${tag}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ tag }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data && data.length > 0) {
           setFlashcards(data);
         } else {
-          setFlashcardsMessage('You have not created any flashcards with this tag yet.')
+          setFlashcardsMessage('You have not created any flashcards with this tag yet.');
         }
       })
       .catch((error) => console.error('Error fetching flashcards:', error));
@@ -134,18 +143,18 @@ function Test() {
                 onChange={handleChange}
               >
                 <MenuItem disabled value="">
-                  <em>Choose a tag</em>
+                  <em></em>
                 </MenuItem>
                 {tags.map((tag) => (
                   <MenuItem 
-                    key={tag} 
-                    value={tag}
+                    key={tag[0]} 
+                    value={tag[0]}
                   >
-                    {tag}
+                    {tag[0]}
                   </MenuItem>
                 ))}
               </Select>
-              <Button variant="contained">
+              <Button variant="contained" onClick={handleTestTag}>
                 Test Tag
               </Button>
             </div>

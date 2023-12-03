@@ -144,10 +144,10 @@ class Database:
         return cursor.fetchall()
     
     def retrieve_cards_tag(self, tag):
-        statement = """"SELECT cards.front, cards.back, cards.id, tags.name 
+        statement = """SELECT cards.front, cards.back, cards.id, tags.name 
                     FROM cards 
                     LEFT JOIN tags ON cards.tag_id = tags.id 
-                    WHERE tags.id = ? 
+                    WHERE tags.name = ? 
                     ORDER BY cards.front ASC"""
         connection, cursor = self.db_connect()
         cursor.execute(statement, (tag,))
@@ -174,7 +174,7 @@ def main():
 
     db.update_tag("1", "0")
 
-    print(db.retrieve_cards())
+    print(db.retrieve_cards_tag("tag1"))
 
 
 if __name__ == '__main__':
