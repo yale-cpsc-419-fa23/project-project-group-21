@@ -143,9 +143,6 @@ function HomePage() {
               <Dropdown setTagId={handleTagId}/>
             </div>
           ))}
-          <div className="centered-text">
-            <p>{savedText}</p>
-          </div>
         </div>
         <Wordbox onButtonClick={editFlashcard} updateBox={updateBox}/>
       </div>
