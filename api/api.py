@@ -60,8 +60,7 @@ def retrieve_all_tags():
 
 @app.route('/retrieve-cards-tag', methods=['GET'])
 def retrieve_cards_tag():
-    data = request.get_json()
-    tag_name = data['tagName']
+    tag_name = request.args.get('tag')
     cards = db.retrieve_cards_tag(tag_name)
     return jsonify(cards), 200
 
