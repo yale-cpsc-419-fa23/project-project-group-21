@@ -37,46 +37,54 @@ def kanji_check(word):
 def get_furigana(kanji, furigana):
     # should return ?う and [会、あ]
     kanji_pairs = []
-    replaced_kanji = ""
+    original_kanji = kanji
+    common_suffix = ""
 
-    offset = 0
-    for moji in kanji:
-        if moji not in hiragana_list:
-            # kanji found, so add ? to replaced_kanji
-            replaced_kanji += "?"
+    # trimming the common prefixes and suffixes
+    while kanji[0] == furigana[0]:
+        kanji = kanji[1:]
+        furigana = furigana[1:]
 
-            # get the rest of word.
-            # print("Looking at kanji/furigana pair" + kanji + ", " + furigana)
-            rest = kanji[1:]
-            # print("The rest of the kanji string is: " + rest)
+    while kanji[-1] == furigana[-1]:
+        common_suffix += kanji[-1]
+        kanji = kanji[:-1]
+        furigana = furigana[:-1]
 
-            # # get up until the part that lines up with the next furigana
-            # if kanji_check(rest):
-            #     # found more kanji.
-            #     if rest[0] not in hiragana_list:
-            #         # compound kanji
-            #         pass
-            #     else:
-            #         # furigana in between.
+    common_suffix = common_suffix[::-1] # reverse.
 
-            # print(furigana[:-len(rest)]) # get the part from the beginning to the start of furigana
-            definition = furigana[:-len(rest)]
+    if (len(kanji) == 1): # down to single kanji?
+        kanji_pairs.append([kanji, furigana])
+        return [original_kanji, kanji_pairs]
 
-            pair = [moji, definition]
-            kanji_pairs.append(pair)
+    # get the rest of word.
+    # print("Looking at kanji/furigana pair" + kanji + ", " + furigana)
+    rest = kanji[1:]
+    # print("The rest of the kanji string is: " + rest)
 
-            kanji = kanji[1:]
-            furigana = furigana[len(definition):]
-            # print ("cut furigana to " + furigana)
-            offset += 1
-        else:
-            # start truncating from the front. truncation ratio is 1:1 b/c moji == kana.
-            replaced_kanji += kanji[0]
-            kanji = kanji[1:]
+    definition = ""
+    # found more kanji.
+    if rest[0] not in hiragana_list:
+        # compound kanji. unhandled as of now.
+        pass
+    else:
+        # furigana in between.
+        next_furigana = rest[0]
+        # checks a single step down. will be fine for *most* Japanese words.
+        while furigana[0] != next_furigana:
+            definition += furigana[0]
             furigana = furigana[1:]
-            offset += 1
+        # print("cut furigana to " + furigana)
 
-    return [replaced_kanji, kanji_pairs]
+        kanji_pairs.append([kanji[0], definition])
+
+        recursive = get_furigana(rest, furigana)
+        kanji_pairs += recursive[1]
+
+    kanji = kanji[1:]
+    furigana = furigana[len(definition):]
+    # print ("cut furigana to " + furigana)
+
+    return [original_kanji, kanji_pairs]
 
 def convert_image_to_array(image):
     # print(image.split(',')[1])

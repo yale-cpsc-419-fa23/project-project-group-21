@@ -181,13 +181,15 @@ def main():
     db.add_card("教える", "おしえる", "0")
     db.add_card("会う", "あう", "0")
     db.add_card("お父さん", "おとうさん", "0")
-    # db.add_card("朝ご飯", "あさごはん", "0")
+    db.add_card("ご飯", "ごはん", "0")
+    db.add_card("朝ご飯", "あさごはん", "0")
 
     db.add_tag("tag0")
 
     db.update_tag("1", "0")
 
     # print(db.retrieve_cards_tag("tag1"))
+
     ex = db.retrieve_card_by_id(0)[0]
     print(get_furigana(ex[0], ex[1]))
 
@@ -200,10 +202,11 @@ def main():
     ex = db.retrieve_card_by_id(3)[0]
     print(get_furigana(ex[0], ex[1]))
 
-    # ex = db.retrieve_card_by_id(4)[0]
-    # print(get_furigana(ex[0], ex[1]))
+    ex = db.retrieve_card_by_id(4)[0]
+    print(get_furigana(ex[0], ex[1]))
 
-
+    ex = db.retrieve_card_by_id(5)[0]
+    print(get_furigana(ex[0], ex[1]))
 
 if __name__ == '__main__':
     main()
