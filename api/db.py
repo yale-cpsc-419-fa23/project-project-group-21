@@ -79,7 +79,7 @@ class Database:
 
     def add_card(self, front, back, tag_id):
         data = (self.card_id, front, back, tag_id)
-        print(data)
+        # print(data)
         self.card_id += 1 # increment card_id after setting it to current card.
         statement = """INSERT INTO cards
                           (id, front, back, tag_id)
@@ -109,7 +109,7 @@ class Database:
         # ERROR: if inputting the tag reaches an error(executing) then the tag_id increases regardless
         # ERROR: put UNIQUE names
         data = (self.tag_id, name)
-        print(data)
+        # print(data)
         self.tag_id += 1 # increment card_id after setting it to current card.
         statement = """INSERT INTO tags
                           (id, name)
@@ -142,12 +142,21 @@ class Database:
         connection, cursor = self.db_connect()
         cursor.execute(statement)
         return cursor.fetchall()
-    
+
+    def retrieve_card_by_id(self, card_id):
+        statement = """SELECT cards.front, cards.back, cards.id, tags.name
+                    FROM cards
+                    LEFT JOIN tags ON cards.tag_id = tags.id
+                    WHERE cards.id = ?"""
+        connection, cursor = self.db_connect()
+        cursor.execute(statement, (card_id,))
+        return cursor.fetchall()
+
     def retrieve_cards_tag(self, tag):
-        statement = """SELECT cards.front, cards.back, cards.id, tags.name 
-                    FROM cards 
-                    LEFT JOIN tags ON cards.tag_id = tags.id 
-                    WHERE tags.name = ? 
+        statement = """SELECT cards.front, cards.back, cards.id, tags.name
+                    FROM cards
+                    LEFT JOIN tags ON cards.tag_id = tags.id
+                    WHERE tags.name = ?
                     ORDER BY cards.front ASC"""
         connection, cursor = self.db_connect()
         cursor.execute(statement, (tag,))
@@ -163,18 +172,37 @@ class Database:
 
 # for testing purposes only.
 def main():
+    from kanji import get_furigana
+
     db = Database(DB_URL) # instantiates a database, and closes once
 
     # testing
-    db.add_card("hello", "world", "0")
-    db.add_card("this is", "pretty cool", "11")
+    db.add_card("へや会うくる", "へやあうくる", "0")
+    db.add_card("教える", "おしえる", "0")
+    db.add_card("会う", "あう", "0")
+    db.add_card("お父さん", "おとうさん", "0")
+    # db.add_card("朝ご飯", "あさごはん", "0")
 
     db.add_tag("tag0")
-    db.add_tag("tag1")
 
     db.update_tag("1", "0")
 
-    print(db.retrieve_cards_tag("tag1"))
+    # print(db.retrieve_cards_tag("tag1"))
+    ex = db.retrieve_card_by_id(0)[0]
+    print(get_furigana(ex[0], ex[1]))
+
+    ex = db.retrieve_card_by_id(1)[0]
+    print(get_furigana(ex[0], ex[1]))
+
+    ex = db.retrieve_card_by_id(2)[0]
+    print(get_furigana(ex[0], ex[1]))
+
+    ex = db.retrieve_card_by_id(3)[0]
+    print(get_furigana(ex[0], ex[1]))
+
+    # ex = db.retrieve_card_by_id(4)[0]
+    # print(get_furigana(ex[0], ex[1]))
+
 
 
 if __name__ == '__main__':

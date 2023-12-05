@@ -1,7 +1,7 @@
 import time
 from flask import Flask, request, jsonify
 from db import Database, DB_URL
-from kanji import Predictor
+from kanji import Predictor, get_furigana
 
 db = Database(DB_URL)
 app = Flask(__name__)
@@ -70,6 +70,18 @@ def retrieve_kanji():
     image = data['image']
     kanji = predictor.predict(image, 1)
     return jsonify(kanji), 200
+
+@app.route('/retrieve-furigana', methods=['POST'])
+def retrieve_furigana():
+    data = request.get_json()
+    card_id = data['id']
+    card = db.retrieve_card_by_id(card_id)[0]
+    front = card[0] # assumes front is kanji
+    back = card[1] # assumes back is furigana
+    formatted_info = get_furigana(front, back)
+
+    return jsonify(formatted_info), 200
+
 
 # @app.route('/get-saved-text', methods=['GET'])
 # def get_saved_text():
