@@ -13,7 +13,7 @@ function Header() {
 
 <Stack direction="row" className="header-bar">
       <Box className="title">
-        <h2> FLASHCARD WEBSITE </h2>
+        <h2> KANJI KANA HARD </h2>
       </Box>
 
       <Box className="edit">
