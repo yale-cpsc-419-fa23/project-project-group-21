@@ -73,8 +73,7 @@ def retrieve_kanji():
 
 @app.route('/retrieve-furigana', methods=['GET'])
 def retrieve_furigana():
-    data = request.get_json()
-    card_id = data['id']
+    card_id = request.args.get('id')
     card = db.retrieve_card_by_id(card_id)[0]
     front = card[0] # assumes front is kanji
     back = card[1] # assumes back is furigana

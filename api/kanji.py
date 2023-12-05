@@ -62,7 +62,7 @@ def get_furigana(kanji, furigana):
             # print(furigana[:-len(rest)]) # get the part from the beginning to the start of furigana
             definition = furigana[:-len(rest)]
 
-            pair = (moji, definition)
+            pair = [moji, definition]
             kanji_pairs.append(pair)
 
             kanji = kanji[1:]
