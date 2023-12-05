@@ -11,15 +11,19 @@ function FuriganaWord( {word, furigana, answer, complete, reset} ) {
   const [currKanjiIndex, setCurrKanjiIndex] = useState(0);
   const [currWord, setCurrWord] = useState("")
 
-  useEffect (() => {
 
+  useEffect (() => {
     if(currWord !== word) {
       setAnsweredKanji([]);
       setCurrKanjiIndex(0);
     }
-    
-    setCurrWord(word);
 
+    setCurrWord(word);
+    
+  }, [word])
+
+  useEffect (() => {
+    
     setWordSplit(word.split(''));
   
     let parsed_kanji = [];
@@ -37,10 +41,12 @@ function FuriganaWord( {word, furigana, answer, complete, reset} ) {
     
     if(answerKanji.length === kanji.length && kanji.length !== 0) {
       complete(true);
+    } else {
+      complete(false);
     }
     
 
-  }, [answer, word]);
+  }, [answer, currWord]);
 
   return wordSplit.map((char) => {
     const kanjiIndex = furigana.findIndex(([kanjiChar]) => kanjiChar === char);
@@ -69,7 +75,6 @@ function FuriganaWord( {word, furigana, answer, complete, reset} ) {
 }
 
 function Kanji( {flashcards} ) {
-  const [currentWord, setCurrentWord] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [word, setWord] = useState('');
   const [furigana, setFurigana] = useState([]);
@@ -77,47 +82,43 @@ function Kanji( {flashcards} ) {
   const [complete, setComplete] = useState(false);
   const [clear, setClear] = useState(false);
 
-  const handleNext = () => { // Update flashcard counter on 'next'
+  const handleNext = async () => { // Update flashcard counter on 'next'
+    
     setCurrentIndex(currentIndex + 1);
-    // getEncodedWord();
-    setWord("買う");
-    setFurigana([["買", "か"]]);
-    setAnswer("");
-    setComplete(false);
-    setClear(true);
   };
+
+  useEffect(() => {
+    if(currentIndex < flashcards.length) {
+      getEncodedWord();
+      setAnswer("");
+      setClear(true);
+      setComplete(false);
+    }
+  }, [currentIndex])
 
   useEffect(() => {
     
     const fetchData = async () => {
       await getEncodedWord();
     };
-  
-    fetchData();
+    if(currentIndex < flashcards.length) {
+      fetchData();
+    }
   }, []); 
 
   const getEncodedWord = () => {
-    console.log("SAD SAD SAD");
-    fetch('/retrieve-furigana', {
+    fetch(`/retrieve-furigana?id=${flashcards[currentIndex][2]}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: flashcards[currentIndex][2] }),
+      // body: JSON.stringify({ id: flashcards[currentIndex][2] }),
+    }).then((response) => response.json())
+    .then((data) => {
+      setWord(data[0]);
+      setFurigana(data[1]);
     })
-      .then((response) => {
-        // Handle the response from the server if needed
-        console.log(response);
-        if (response.status === 200) {
-          console.log(response);
-          console.log("HAPPY HAPPY HAPPY");
-          setWord("朝ご飯");
-          setFurigana([["朝", "あさ"], ["飯", "はん"]]);
-        }
-      })
-      .catch((error) => {
-        // Handle errors if the request fails
-      });
+    .catch((error) => console.error('Error fetching furigana:', error));
   };
 
   return(
@@ -125,14 +126,14 @@ function Kanji( {flashcards} ) {
     <Box className="content-container">
 
       <Box className="main-container">
-       {currentIndex < flashcards.length - 1 ?
+       {currentIndex < flashcards.length ?
         (<Box className="canvas-container">
             <Stack direction="row">
               <FuriganaWord word={word} furigana={furigana} answer={answer} complete={setComplete}/>
             </Stack>
 
             <DrawingCanvas setAnswer={setAnswer} clear={clear} clear_func={setClear}/>
-            {complete ?  
+            {complete === true ?  
             <Button
               variant="contained"
               onClick={handleNext}
@@ -143,7 +144,7 @@ function Kanji( {flashcards} ) {
             }
         </Box>) :
 
-        <Box className="canvas-container">
+        (<Box className="canvas-container">
           <Box display="flex" justifyContent="center" width="100%" marginTop="30px" alignItems="center">
             <Typography variant="h4">
               Congrats! You learned the Kanji!
@@ -156,7 +157,7 @@ function Kanji( {flashcards} ) {
               </Button>
             </a>
           </Box>
-        </Box>
+        </Box>)
         }
 
       </Box>
@@ -189,7 +190,6 @@ function KanjiTest() {
   };
 
   const getCardsTag = (tag) => {
-    console.log(tag);
     fetch(`/retrieve-cards-tag?tag=${tag}`, {
       method: 'GET',
       headers: {
