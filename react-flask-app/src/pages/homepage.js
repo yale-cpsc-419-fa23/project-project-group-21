@@ -3,6 +3,7 @@ import '../styles/homepage.css';
 import Header from '../components/header';
 import Wordbox from '../components/wordbox';
 import Dropdown from '../components/dropdown';
+import { Button, Box } from '@mui/material';
 
 function HomePage() {
   const [textboxes, setTextboxes] = useState([]);
@@ -115,14 +116,14 @@ function HomePage() {
       <Header className="header"/>
       <div className="main-container">
         <div className="flashcard-container">
-          <button onClick={addNewTextBoxes} 
+          <Button onClick={addNewTextBoxes} 
             className="create_card_button" 
             style={{'display': `${createCardVisible ? 'inline' : 'none'}`, backgroundColor: 'lightskyblue',}}
           >
-            Create Two Text Boxes
-          </button>
+            Create a Flashcard
+          </Button>
           {textboxes.map((text, index) => (
-            <div className="centered-textbox" key={index}>
+            <div className="centered-textbox" key={index} style={{ padding: '30px' }}>
               <textarea
                 rows="4"
                 cols="50"
@@ -137,10 +138,37 @@ function HomePage() {
                 value={text.back}
                 onChange={(e) => handleTextChange(index, 'back', e.target.value)}
               />
-              <button onClick={() => {handleSaveButtonClick(index)}} className="create_card_button">
-                Save Tuple
-              </button>
               <Dropdown setTagId={handleTagId}/>
+              <Box>
+                <Button 
+                  onClick={() => {handleSaveButtonClick(index)}} 
+                  className="create_card_button" 
+                  style={{
+                    backgroundColor: 'lightskyblue',
+                    marginTop: '0px', 
+                    marginLeft: '-10px', 
+                    fontSize: '12px',   
+                    padding: '8px 2px', 
+                  }}
+                  >
+                  Save Card
+                </Button>
+                <a href="/">
+                  <Button 
+                    className="cancel_button" 
+                    style={{
+                      backgroundColor: 'coral',
+                      marginTop: '0px', 
+                      marginLeft: '10px', 
+                      fontSize: '12px',   
+                      padding: '8px 2px', 
+                      color: 'white',
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </a>
+              </Box>   
             </div>
           ))}
         </div>

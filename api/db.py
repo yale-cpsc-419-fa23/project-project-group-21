@@ -92,7 +92,7 @@ class Database:
         connection.close()
 
     def edit_card(self, front, back, card_id, tag_id):
-        data = (front, back, str(card_id), str(tag_id))
+        data = (front, back, str(tag_id), str(card_id))
         statement = """UPDATE cards
                         SET front = ?,
                             back = ?,

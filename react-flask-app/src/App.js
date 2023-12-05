@@ -3,7 +3,7 @@ import './App.css';
 import HomePage from './pages/homepage';
 import Library from './pages/library';
 import Test from './pages/test';
-import Kanji from './pages/kanji';
+import KanjiTest from './pages/kanji';
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<HomePage/>}/>
         <Route path="/library" element={<Library/>}/>
         <Route path="/test" element={<Test/>}/>
-        <Route path="/kanji" element={<Kanji/>}/>
+        <Route path="/kanji" element={<KanjiTest/>}/>
       </Routes>
     </BrowserRouter>
 

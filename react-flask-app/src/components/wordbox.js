@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Stack, Box, List, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { Stack, Box, List, ListItemButton, ListItemText, Typography, Button } from '@mui/material';
 import '../styles/wordbox.css';
 
 function Wordbox ({ onButtonClick, updateBox }) {
@@ -100,7 +100,7 @@ function Wordbox ({ onButtonClick, updateBox }) {
         </List>
       </Box>
 
-      <Box className="tag-container">
+      <Box className="tag-container" style={{ marginBottom: '10px' }}>
         {showTagInput ? ( // Conditionally render the tag input
           <Box className="centered-textbox">
             <input
@@ -110,10 +110,10 @@ function Wordbox ({ onButtonClick, updateBox }) {
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
             />
-            <button onClick={() => createTagName(tagInput)}>Submit</button>
+            <Button onClick={() => createTagName(tagInput)}>Submit</Button>
           </Box>
         ) : (
-          <button onClick={handleTagButtonClick} style={{backgroundColor: 'lightskyblue',}}>Make your tags here</button>
+          <Button onClick={handleTagButtonClick} style={{backgroundColor: 'lightskyblue',}}>Make your tags here</Button>
         )}
       </Box>
 

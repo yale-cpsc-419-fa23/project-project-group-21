@@ -7,7 +7,7 @@ import Flipflashcard from '../components/flipFlashcard';
 import '../styles/test.css';
 
 
-function FlashcardContainer({ flashcards }) {
+function FlashcardContainer({ flashcards, setFlashcards }) {
   const [currentIndex, setCurrentIndex] = useState(0); // state to keep track of flashcard counter
 
   const handleNext = () => { // Update flashcard counter on 'next'
@@ -22,6 +22,17 @@ function FlashcardContainer({ flashcards }) {
     }
   };
 
+  const shuffleCards = () => {
+    // Use Fisher-Yates shuffle algorithm
+    const shuffledFlashcards = [...flashcards];
+    for (let i = shuffledFlashcards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledFlashcards[i], shuffledFlashcards[j]] = [shuffledFlashcards[j], shuffledFlashcards[i]];
+    }
+    setFlashcards(shuffledFlashcards);
+    setCurrentIndex(0); // Reset currentIndex to the first card after shuffling
+  };
+
   const flashcardCounter = `${currentIndex + 1}/${flashcards.length}`; // actual counter 'component'
 
   return (
@@ -30,21 +41,39 @@ function FlashcardContainer({ flashcards }) {
         Flashcard {flashcardCounter}
       </Typography>
       <Flipflashcard word={flashcards[currentIndex]} />
-      <Box display="flex" justifyContent="space-between" width="100%" marginTop="10px">
+      <Box display="flex" justifyContent="space-between" width="60%" marginTop="20px" marginLeft="auto" marginRight="auto">
         <Button 
           variant="contained" 
           onClick={handlePrevious} 
           disabled={currentIndex === 0}
+          style={{ marginRight: '10px' }}
         >
           Previous
+        </Button>
+        <Button 
+          variant="contained"
+          onClick={shuffleCards}
+          style={{ margin: '0 10px', backgroundColor: 'lightgreen', color: 'black' }}
+        >
+          Shuffle
         </Button>
         <Button
           variant="contained"
           onClick={handleNext}
           disabled={currentIndex === flashcards.length - 1}
+          style={{ marginLeft: '10px' }}
         >
           Next
         </Button>
+      </Box>
+      <Box display="flex" justifyContent="center" width="100%" marginTop="30px" alignItems="center">
+        <a href="/test">
+          <Button
+            variant="contained"
+          >
+            Test other cards
+          </Button>
+        </a>
       </Box>
     </Box>
   );
@@ -118,7 +147,7 @@ function Test() {
       <Header />
       <div className="testing-container">
         {flashcards.length > 0 ? (
-          <FlashcardContainer flashcards={flashcards} />
+          <FlashcardContainer flashcards={flashcards} setFlashcards={setFlashcards} />
         ) : (
           <>
             <div className="label-container">

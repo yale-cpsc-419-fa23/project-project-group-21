@@ -71,7 +71,7 @@ def retrieve_kanji():
     kanji = predictor.predict(image, 1)
     return jsonify(kanji), 200
 
-@app.route('/retrieve-furigana', methods=['POST'])
+@app.route('/retrieve-furigana', methods=['GET'])
 def retrieve_furigana():
     data = request.get_json()
     card_id = data['id']
@@ -79,6 +79,7 @@ def retrieve_furigana():
     front = card[0] # assumes front is kanji
     back = card[1] # assumes back is furigana
     formatted_info = get_furigana(front, back)
+    print(formatted_info)
 
     return jsonify(formatted_info), 200
 

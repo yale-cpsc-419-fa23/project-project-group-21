@@ -3,11 +3,15 @@ import "../styles/kanji.css";
 import React, { useState, useRef, useEffect } from 'react';
 import { Box, Typography } from "@mui/material";
 
-const DrawingCanvas = () => {
+const DrawingCanvas = ({setAnswer, clear, clear_func}) => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
 
   useEffect(() => {
+    if(clear === true) {
+      handleClearCanvas();
+      clear_func(false);
+    }
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
@@ -49,7 +53,7 @@ const DrawingCanvas = () => {
       canvas.removeEventListener('mousemove', draw);
       canvas.removeEventListener('mouseup', stopDrawing);
     };
-  }, [isDrawing]);
+  }, [isDrawing, clear]);
 
   const handleClearCanvas = () => {
     const canvas = canvasRef.current;
@@ -74,6 +78,8 @@ const DrawingCanvas = () => {
       // Handle the response from your server
       const result = await response.json();
       console.log('Handwriting recognition result:', result);
+      setAnswer(result[0]);
+      handleClearCanvas();
     } catch (error) {
       console.error('Error sending image to backend:', error);
     }

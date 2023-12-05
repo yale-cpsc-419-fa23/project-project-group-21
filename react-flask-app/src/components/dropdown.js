@@ -40,7 +40,7 @@ function Dropdown({ setTagId }) {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="tag-dropdown-label">Tag</InputLabel>
+        <InputLabel id="tag-dropdown-label">Select a tag</InputLabel>
         <Select
           id="tag-dropdown"
           label="Tag"
