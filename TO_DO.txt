@@ -1,0 +1,11 @@
+Test Page set up - THOMAS
+    Fix tags in drop down to not include index
+    Can't select the specific folder yet
+    Must do stuff with passing the tag id to the databse
+    Styling
+
+On homepage
+    Word in wordbox clicked
+    Make the word's tag appear
+
+Have the kanji appear when checked! all the logic is done, just needs HTML to display -KEVIN

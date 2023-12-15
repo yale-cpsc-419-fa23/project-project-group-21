@@ -1,0 +1,22 @@
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+.drawing-canvas {
+    border: 1px solid black;
+    background-color: white;
+}
+
+.button-container {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .button-container button {
+    padding: 10px;
+  }
